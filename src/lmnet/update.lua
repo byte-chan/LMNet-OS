@@ -72,8 +72,13 @@ local remoteFile = fs.open(".updaterVersionCheck", "r")
 local remoteVersion = tonumber(remoteFile.readAll())
 remoteFile.close()
 local localFile = fs.open(".lmnetVersion", "r")
-local localVersion = tonumber(localFile.readAll())
-localFile.close()
+local localVersion
+if not localFile then
+	localVersion = 0
+else
+	localVersion = tonumber(localFile.readAll())
+	localFile.close()
+end
 
 clear()
 
