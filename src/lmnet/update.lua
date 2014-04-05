@@ -101,10 +101,8 @@ getFile("src/usrbin/bash.lua", "usr/bin/bash")
 getFile("src/usrbin/cat.lua", "usr/bin/cat")
 getFile("src/usrbin/echo.lua", "usr/bin/echo")
 getFile("src/usrbin/startw.lua", "usr/bin/startw")
+getFile("src/apis/git.lua", ".lmnet/apis/git")
 print("Creating missing directories...")
-if not fs.exists(".lmnet/apis") then
-	fs.makeDir(".lmnet/apis")
-end
 if not fs.exists("root") then
 	fs.makeDir("root")
 end
