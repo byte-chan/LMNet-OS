@@ -64,13 +64,15 @@ systemDirs = {
 	apis = "/.lmnet/apis", -- API directory
 }
 
-if not fs.exists(systemDirs.apis) then
-	clear()
-	fgSet(colors.red)
-	print("No applications directory found!")
-	print("Reinstall LMNet OS or run '.lmnet/update' to fix this problem.")
-	fgSet(colors.white)
-	return
+for _, v in pairs(systemDirs) do
+	if not fs.exists(v) then
+		clear()
+		fgSet(colors.red)
+		print("Missing directories!")
+		print("Reinstall LMNet OS or run '.lmnet/update' to fix this problem.")
+		fgSet(colors.white)
+		return
+	end
 end
 	
 for _, v in pairs(systemDirs) do

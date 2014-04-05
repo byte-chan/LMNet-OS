@@ -101,6 +101,16 @@ getFile("src/usrbin/bash.lua", "usr/bin/bash")
 getFile("src/usrbin/cat.lua", "usr/bin/cat")
 getFile("src/usrbin/echo.lua", "usr/bin/echo")
 getFile("src/usrbin/startw.lua", "usr/bin/startw")
+print("Creating missing directories...")
+if not fs.exists(".lmnet/apis") then
+	fs.makeDir(".lmnet/apis")
+end
+if not fs.exists("root") then
+	fs.makeDir("root")
+end
+if not fs.exists("home") then
+	fs.makeDir("home")
+end
 print("Press any key to continue")
 while true do
 	local e = os.pullEvent("key")
