@@ -210,7 +210,7 @@ while not bExit do
 			return falseval
 		end
 	end
-	local dir = iif(shell.dir() == fs.combine(systemDirs.users, currentUser) or (shell.dir() == systemDirs.root and currentUser == "root"), "~", "/"..fs.dir())
+	local dir = iif(shell.dir() == fs.combine(systemDirs.users, currentUser) or (shell.dir() == systemDirs.root and currentUser == "root"), "~", "/"..shell.dir())
 	local w, h = term.getSize()
 	if w < h then
 		write( dir..iif(currentUser == "root", "#", "$").." " )
