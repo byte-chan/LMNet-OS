@@ -203,7 +203,7 @@ local tCommandHistory = {}
 while not bExit do
 	term.setBackgroundColor( bgColor )
 	term.setTextColor( promptColor )
-	local function iif(cond, trueval, falseval)
+	function iif(cond, trueval, falseval)
 		if cond then
 			return trueval
 		else
