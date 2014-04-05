@@ -93,4 +93,6 @@ end
 -- add applications directory to path
 updatePath(systemDirs.apps)
 
+currentUser = "root"
+
 shell.run("bash")
