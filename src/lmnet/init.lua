@@ -170,4 +170,4 @@ os.version = function()
 	return "LMNet OS Beta"
 end
 clear()
-shell.run("bash")
+shell.run("bash", "-e")

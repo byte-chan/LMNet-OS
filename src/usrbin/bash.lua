@@ -217,6 +217,12 @@ end
 
 -- Run any programs passed in as arguments
 local tArgs = { ... }
+if tArgs[1] ~= nil then
+	if tArgs[1] == "-e" then
+		tEnv = _G
+		table.remove(tArgs, 1)
+	end
+end
 if #tArgs > 0 then
 	shell.run( ... )
 end
