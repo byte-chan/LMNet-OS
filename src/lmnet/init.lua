@@ -14,7 +14,7 @@ end
 function setCursor(x, y)
 	term.setCursorPos(x, y)
 end
-function getCursor(val)
+function getCursor()
 	local x, y = term.getCursorPos()
 	local ret = {
 		["x"] = x, ["y"] = y
@@ -53,6 +53,40 @@ end
 function fgGet()
 	return term.getTextColor()
 end
+function readConfig(cfg)
+	local file = fs.open("/.lmnet/sys.conf", "r")
+	if not file then
+		return nil
+	end
+	local lines = {}
+	local line = ""
+	while line ~= nil do
+		line = file.readLine()
+		if line then
+			table.insert(lines, line)
+		end
+	end
+	file.close()
+	local config = {}
+	for _, v in pairs(lines) do
+		local tmp
+		local tmp2 = ""
+		for match in string.gmatch(v, "[^\=]+") do
+			if tmp then
+				tmp2 = tmp2..match
+			else
+				tmp = match
+			end
+		end
+		config[tmp] = textutils.unserialize(tostring(tmp2))
+	end
+	for i, v in pairs(config) do
+		if i == cfg then
+			return v
+		end
+	end
+	return nil
+end
 
 apiList = {}
 
@@ -69,7 +103,7 @@ for _, v in pairs(systemDirs) do
 		clear()
 		fgSet(colors.red)
 		print("Missing directories!")
-		print("Reinstall LMNet OS or run '.lmnet/update' to fix this problem.")
+		print("Reinstall LMNet OS or run 'lmnet-updater' to fix this problem.")
 		fgSet(colors.white)
 		return
 	end
@@ -82,17 +116,58 @@ for _, v in pairs(systemDirs) do
 end
 
 -- load APIs
+print("Loading APIs...")
 loadAPIs(systemDirs.apis)
 if turtle then
+	print("Loading turtle APIs...")
 	loadAPIs(fs.combine(systemDirs.apis, "turtle"))
 end
 if http then
+	print("Loading http APIs...")
 	loadAPIs(fs.combine(systemDirs.apis, "http"))
 end
 
 -- add applications directory to path
 updatePath(systemDirs.apps)
 
-currentUser = "root"
+currentUser = "login"
+hostName = "localhost"
 
+if not fs.exists("/.lmnet/sys.conf") then
+	write("Create system config? [Yn] ")
+	local input = string.lower(read())
+	if input ~= "y" and input ~= "" then
+		clear()
+		print("No config found.")
+		print("Press any key to continue")
+		while true do
+			local e = os.pullEvent("key")
+			if e == "key" then
+				sleep(1)
+				os.shutdown()
+			end
+			sleep(0)
+		end
+	end
+	clear()
+	write("Host name: ")
+	local file = fs.open("/.lmnet/sys.conf", "w")
+	file.writeLine("hostname=\""..read().."\"")
+	file.close()
+	print("Press any key to continue")
+	while true do
+		local e = os.pullEvent("key")
+		if e == "key" then
+			sleep(1)
+			os.reboot()
+		end
+		sleep(0)
+	end
+end
+
+hostName = readConfig("hostname")
+os.version = function()
+	return "LMNet OS Beta"
+end
+clear()
 shell.run("bash")

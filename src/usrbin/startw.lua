@@ -1,3 +1,6 @@
+if not parentTerm then
+	print("The LMNet OS window system requires ComputerCraft 1.6.")
+end
 
 -- Setup process switching
 local parentTerm = term.current()

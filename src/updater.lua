@@ -52,7 +52,9 @@ local function compileURL(auth,pro,bran,pat)
 end
 
 local function get(auth,reps,bran,paths,sN)
-    if not auth or not reps or not bran or not paths or not sN then error('Attempt to compile nonexistent terms!') end
+    if not auth or not reps or not bran or not paths or not sN then
+        error('Attempt to compile nonexistent terms!')
+    end
     statusCode = requestObject(compileURL(auth,reps,bran,paths),sN,'get')
     return statusCode
 end
@@ -62,62 +64,22 @@ local function getFile(file, target)
 	local ret = get("MultHub", "LMNet-OS", "master", file, target)
 	if ret == false then
 		print("error.")
+		return false
 	else
 		print("OK.")
+		return true
 	end
 end
 
-getFile("version.txt", ".updaterVersionCheck")
-local remoteFile = fs.open(".updaterVersionCheck", "r")
-local remoteVersion = tonumber(remoteFile.readAll())
-remoteFile.close()
-local localFile = fs.open(".lmnetVersion", "r")
-local localVersion
-if not localFile then
-	localVersion = 0
-else
-	localVersion = tonumber(localFile.readAll())
-	localFile.close()
-end
-
-clear()
-
-local tArgs = {...}
-
-if remoteVersion <= localVersion and tArgs[1] ~= "--force" then
-	print("Running the latest version of LMNet OS.")
-	print("Run this program again with --force to reinstall LMNet OS.")
+if not http then
+	print("HTTP API not enabled.")
 	return
 end
 
-clear()
+local ok = getFile("src/lmnet/update.lua", ".update")
+if not ok then
+	return
+end
 
-print("LMNet OS - update or install")
-print("Getting files...")
-getFile("src/startup.lua", "startup")
-getFile("src/lmnet/init.lua", ".lmnet/init")
-getFile("src/lmnet/update.lua", ".lmnet/update")
-getFile("src/usrbin/bash.lua", "usr/bin/bash")
-getFile("src/usrbin/cat.lua", "usr/bin/cat")
-getFile("src/usrbin/echo.lua", "usr/bin/echo")
-getFile("src/usrbin/startw.lua", "usr/bin/startw")
-getFile("src/apis/git.lua", ".lmnet/apis/http/git")
-getFile("src/lmnet/login.lua", ".lmnet/login")
-getFile("src/updater.lua", "lmnet-updater")
-print("Creating missing directories...")
-if not fs.exists("root") then
-	fs.makeDir("root")
-end
-if not fs.exists("home") then
-	fs.makeDir("home")
-end
-if not fs.exists(".lmnet/apis/turtle") then
-	fs.makeDir(".lmnet/apis/turtle")
-end
-print("Press any key to continue")
-while true do
-	local e = os.pullEvent("key")
-	if e == "key" then break end
-	sleep(0)
-end
-os.reboot()
+shell.run(".update")
+fs.delete(".update")

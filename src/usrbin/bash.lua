@@ -1,3 +1,26 @@
+if not currentUser then
+	print("No current user found.")
+	print("Setting user to 'user'.")
+	currentUser = "user"
+end
+
+if not hostName then
+	print("No host name set.")
+	print("Setting host name to 'localhost'.")
+	hostName = "localhost"
+end
+
+if not systemDirs then
+	print("No system dirs found.")
+	print("Setting default LMNet OS dirs to /.")
+	systemDirs = {
+		users = "/",
+		root = "/",
+		apps = "/",
+		apis = "/",
+	}
+end
+
 local parentShell = shell
 
 local bExit = false
