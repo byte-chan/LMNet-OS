@@ -33,6 +33,9 @@ local shell = {}
 local tEnv = {
 	["shell"] = shell,
 }
+for i, v in pairs(_G) do
+	tEnv[i] = v
+end
 
 -- Colors
 local promptColor, textColor, bgColor
