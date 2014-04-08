@@ -111,8 +111,12 @@ local function pagedUsers()
 	local ret = {}
 	for i = 1, maxPages() do
 		local tmp = {}
-		for j = 10*(i-1)+1, iif(10*(i) > #users, #users, 10*(i+1)) do
-			table.insert(tmp, users[j].user)
+		local nElements = 0
+		for j = 10*(i-1)+1, iif(10*(i+1) > #users, #users, 10*(i+1)) do
+			if nElements < 10 then
+				table.insert(tmp, users[j].user)
+				nElements = nElements + 1
+			end
 		end
 		table.insert(ret, tmp)
 	end
