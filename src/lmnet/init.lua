@@ -40,8 +40,10 @@ function updatePath(dir, prepend)
 end
 function loadAPIs(dir)
 	for _, v in pairs(fs.list(dir)) do
-		os.loadAPI(fs.combine(dir, v))
-		table.insert(apiList, v)
+		if not fs.isDir(fs.combine(dir, v)) then
+			os.loadAPI(fs.combine(dir, v))
+			table.insert(apiList, v)
+		end
 	end
 end
 function bgSet(color)
@@ -181,3 +183,5 @@ clear()
 fgSet(colors.yellow)
 print(os.version())
 fgSet(colors.white)
+shell.run("/usr/bin/bash")
+shell.run("/rom/programs/shutdown")

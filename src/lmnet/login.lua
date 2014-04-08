@@ -26,7 +26,9 @@ if not fs.exists("/.lmnet/users.db") then
 			clear()
 			print("Create user accounts")
 			print("Created accounts:")
-			textutils.pagedTabulate(users)
+			for _, v in pairs(users) do
+				print("- "..v.user)
+			end
 			print("")
 			write("User (blank to stop): ")
 			local user = read()
@@ -107,14 +109,18 @@ end
 
 local function pagedUsers()
 	local ret = {}
-	for i = 1, #maxPages() do
+	for i = 1, maxPages() do
 		local tmp = {}
 		for j = 10*(i-1)+1, iif(10*(i+1) > #users, #users, 10*(i+1)) do
 			table.insert(tmp, users[j].user)
 		end
 		table.insert(ret, tmp)
 	end
+	return ret
 end
+
+local selected = 1
+local page = 1
 
 local function redraw()
 	clear()
@@ -122,14 +128,15 @@ local function redraw()
 	print("Select user with arrow keys.")
 	print("Press enter to select.")
 	print("Q to shut down.")
-	print("(page "..page.." of "..maxPages()..")")
+	write("(page ")
+	write(page)
+	write(" of ")
+	write(maxPages())
+	print(")")
 	for i = 1, #pagedUsers()[page] do
-		print(iif(selected == 10*(page-1)+i, "x", " ")" "..pagedUsers()[page][i])
+		print(iif(selected == 10*(page-1)+i, "x", " ").." "..pagedUsers()[page][i])
 	end
 end
-
-local selected = 1
-local page = 1
 
 while currentUser == "login" do
 	redraw()
