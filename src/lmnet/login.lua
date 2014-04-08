@@ -152,8 +152,14 @@ while currentUser == "login" do
 	elseif eventData[1] == "key" then
 		if eventData[2] == keys.up and selected > 1 then
 			selected = selected - 1
+			if selected-(page-1)*10 < 1 then
+				page = page - 1
+			end
 		elseif eventData[2] == keys.down and selected < #users then
 			selected = selected + 1
+			if selected-(page-1)*10 > 10 then
+				page = page + 1
+			end
 		elseif eventData[2] == keys.enter then
 			if users[selected].pass ~= "" then
 				clear()
@@ -170,8 +176,18 @@ while currentUser == "login" do
 			end
 		elseif eventData[2] == keys.left and page > 1 then
 			page = page - 1
+			if selected - 10 < 1 then
+				selected = 1
+			else
+				selected = selected - 10
+			end
 		elseif eventData[2] == keys.right and page < maxPages() then
 			page = page + 1
+			if selected + 10 > #users then
+				selected = #users
+			else
+				selected = selected + 10
+			end
 		elseif eventData[2] == keys.q then
 			clear()
 			shell.run("/rom/programs/shutdown")
