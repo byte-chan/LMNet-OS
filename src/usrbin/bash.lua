@@ -1,3 +1,8 @@
+if not term then
+	print("Not running in CraftOS.")
+	return
+end
+
 if not currentUser then
 	print("No current user found.")
 	print("Setting user to 'user'.")
@@ -34,7 +39,9 @@ local tEnv = {
 	["shell"] = shell,
 }
 for i, v in pairs(_G) do
-	tEnv[i] = v
+	if type(v) == "function" or type(v) == "string" or type(v) == "number" then
+		tEnv[i] = v
+	end
 end
 
 -- Colors

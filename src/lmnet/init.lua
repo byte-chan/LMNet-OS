@@ -11,6 +11,13 @@ function clear()
 	term.clear()
 	term.setCursorPos(1, 1)
 end
+function getSize()
+	local x, y = term.getSize()
+	local ret = {
+		["x"] = x, ["y"] = y
+	}
+	return ret
+end
 function setCursor(x, y)
 	term.setCursorPos(x, y)
 end
@@ -169,5 +176,8 @@ hostName = readConfig("hostname")
 os.version = function()
 	return "LMNet OS Beta"
 end
+shell.run(".lmnet/login")
 clear()
-shell.run("bash")
+fgSet(colors.yellow)
+print(os.version())
+fgSet(colors.white)
