@@ -38,6 +38,6 @@ for _, v in pairs(newArgs) do
 	if v.argType == "api" then
 		api(unpack(v.par))
 	elseif v.argType == "shell" then
-		shell.run(unpack(par))
+		shell.run(unpack(v.par))
 	end
 end
