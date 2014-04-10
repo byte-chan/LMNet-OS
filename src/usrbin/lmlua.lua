@@ -149,11 +149,33 @@ while running do
 	write("lmlua> ")
 	local input = read(nil, lmlua_history)
 	table.insert(lmlua_history, input)
-	local func, err = loadstring(input)
+	local nForcePrint = 0
+	local func, e = loadstring(input, "lmlua")
+	local func2, e2 = loadstring("return "..input, "lmlua")
 	if not func then
-		print(err)
+		if func2 then
+			func = func2
+			e = nil
+			nForcePrint = 1
+		end
 	else
-		setfenv(func, lmlua_env)
-		func()
+		if func2 then
+			func = func2
+		end
 	end
+	if func then
+		setfenv(func, lmlua_env)
+		local tResults = {pcall( function() return func() end )}
+		if tResults[1] then
+			local n = 1
+			while (tResults[n + 1] ~= nil) or (n <= nForcePrint) do
+				print(tostring(tResults[n + 1]))
+				n = n + 1
+			end
+		else
+			print(tResults[2])
+		end
+	else
+		print(e)
+	end 
 end
