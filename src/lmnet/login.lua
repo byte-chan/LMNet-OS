@@ -32,6 +32,12 @@ if not fs.exists("/.lmnet/users.db") then
 			print("")
 			write("User (blank to stop): ")
 			local user = read()
+			for _, v in pairs(users) do
+				if v.user == user then
+					print("No duplicates allowed.")
+					return
+				end
+			end
 			if user == "" then
 				creatingUsers = false
 			else
@@ -138,9 +144,12 @@ local function redraw()
 	write(maxPages())
 	print(")")
 	for i = 1, #pagedUsers()[page] do
-		print(iif(selected == 10*(page-1)+i, "x", " ").." "..pagedUsers()[page][i])
+		print(iif(selected == 10*(page-1)+i, ">", " ").." "..pagedUsers()[page][i].." "..iif(selected == 10*(page-1)+i, "<", " "))
 	end
 end
+
+local oldPullEvent = os.pullEvent
+os.pullEvent = os.pullEventRaw
 
 while currentUser == "login" do
 	redraw()
@@ -170,6 +179,7 @@ while currentUser == "login" do
 					sleep(1.5)
 				else
 					currentUser = users[selected].user
+					os.pullEvent = oldPullEvent
 				end
 			else
 				currentUser = users[selected].user

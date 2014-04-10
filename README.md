@@ -1,5 +1,11 @@
 LMNet OS
 ========
 
-WIP ComputerCraft OS.
-This is starting to get better.
+The official LMNet operating system!
+
+Features:
+
+- login system!
+- random programs!
+- bash!
+- and more...
