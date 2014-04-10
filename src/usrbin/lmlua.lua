@@ -120,7 +120,7 @@ local lmlua_env = {
 		end
 	},
 	["exit"] = function()
-		running = nil
+		running = false
 	end
 }
 
@@ -140,7 +140,7 @@ if #tArgs > 0 then
 	return
 end
 
-running = true
+local running = true
 local lmlua_history = {}
 
 print("LMLua interpreter")
@@ -177,5 +177,6 @@ while running do
 		end
 	else
 		print(e)
-	end 
+	end
+	sleep(0)
 end
