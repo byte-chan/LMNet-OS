@@ -29,7 +29,7 @@ local newArgs = {}
 
 for i = 1, #tArgs do
 	local matches = {}
-	for match in string.gmatch("[^=;]+") do
+	for match in string.gmatch(tArgs[i], "[^=;]+") do
 		table.insert(matches, match)
 	end
 	table.insert(newArgs, {argType = matches[1], par = {unpack(matches, 2)}})
