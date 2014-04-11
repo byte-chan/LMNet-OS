@@ -134,7 +134,10 @@ local page = 1
 
 local function redraw()
 	clear()
+	bgSet(colors.gray)
+	term.clearLine()
 	cprint("LMNet OS: Login")
+	bgSet(colors.black)
 	print("Select user with arrow keys.")
 	print("Press enter to select.")
 	print("Q to shut down.")
@@ -144,7 +147,17 @@ local function redraw()
 	write(maxPages())
 	print(")")
 	for i = 1, #pagedUsers()[page] do
-		print(iif(selected == 10*(page-1)+i, ">", " ").." "..pagedUsers()[page][i].." "..iif(selected == 10*(page-1)+i, "<", " "))
+		if selected == 10*(page-1)+i then
+			bgSet(colors.white)
+			fgSet(colors.black)
+		else
+			bgSet(colors.black)
+			fgSet(colors.white)
+		end
+		term.clearLine()
+		print(iif(selected == 10*(page-1)+i, ">", " ").." "..pagedUsers()[page][i])
+		bgSet(colors.black)
+		fgSet(colors.white)
 	end
 end
 
@@ -205,3 +218,4 @@ while currentUser == "login" do
 	end
 	sleep(0)
 end
+clear()

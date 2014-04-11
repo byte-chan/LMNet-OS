@@ -59,7 +59,17 @@ local function redraw(mode)
 	print("Q to exit.")
 	print("(page "..page.." of "..maxPages()..")")
 	for i = 1, #pagedUsers()[page] do
-		print(iif(selected == 10*(page-1)+i, ">", " ").." "..pagedUsers()[page][i].." "..iif(selected == 10*(page-1)+i, "<", " "))
+		if selected == 10*(page-1)+i then
+			bgSet(colors.white)
+			fgSet(colors.black)
+		else
+			bgSet(colors.black)
+			fgSet(colors.white)
+		end
+		term.clearLine()
+		print(iif(selected == 10*(page-1)+i, ">", " ").." "..pagedUsers()[page][i])
+		bgSet(colors.black)
+		fgSet(colors.white)
 	end
 end
 
@@ -70,7 +80,17 @@ local function redrawMove()
 	print("Press enter to move user.")
 	print("(page "..page.." of "..maxPages()..")")
 	for i = 1, #pagedUsers()[page] do
-		print(iif(selected == 10*(page-1)+i, ">", " ").." "..pagedUsers()[page][i].." "..iif(selected == 10*(page-1)+i, "<", " "))
+		if selected == 10*(page-1)+i then
+			bgSet(colors.white)
+			fgSet(colors.black)
+		else
+			bgSet(colors.black)
+			fgSet(colors.white)
+		end
+		term.clearLine()
+		print(iif(selected == 10*(page-1)+i, ">", " ").." "..pagedUsers()[page][i])
+		bgSet(colors.black)
+		fgSet(colors.white)
 	end
 end
 
@@ -228,3 +248,4 @@ end
 local file = fs.open("/.lmnet/users.db", "w")
 file.write(textutils.serialize(users))
 file.close()
+clear()
