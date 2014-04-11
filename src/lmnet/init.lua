@@ -176,7 +176,7 @@ end
 
 hostName = readConfig("hostname")
 os.version = function()
-	return "LMNet OS Beta"
+	return "LMNet OS 1.0"
 end
 shell.run(".lmnet/login")
 clear()
