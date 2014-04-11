@@ -196,6 +196,7 @@ while currentUser == "login" do
 				end
 			else
 				currentUser = users[selected].user
+				os.pullEvent = oldPullEvent
 			end
 		elseif eventData[2] == keys.left and page > 1 then
 			page = page - 1
