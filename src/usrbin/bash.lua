@@ -39,7 +39,7 @@ while not bExit do
 		"/"..shell.dir()
 	)
 	local w, h = term.getSize()
-	if w < h then
+	if w < 30 and h < 25 then
 		write(
 		dir .. iif(currentUser == "root",
 			"#",
