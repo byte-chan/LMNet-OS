@@ -221,7 +221,7 @@ selectProcess( launchProcess( {
     ["shell"] = shell,
     ["multishell"] = multishell,
 	["_G"] = _G,
-}, "/rom/programs/bash" ) )
+}, "/usr/bin/bash" ) )
 redrawMenu()
 
 -- Run processes
