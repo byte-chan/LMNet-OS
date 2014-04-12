@@ -217,11 +217,7 @@ end
 -- Begin
 parentTerm.clear()
 setMenuVisible( false )
-selectProcess( launchProcess( {
-    ["shell"] = shell,
-    ["multishell"] = multishell,
-	["_G"] = _G,
-}, "/usr/bin/bash" ) )
+selectProcess( launchProcess( getfenv(), "/usr/bin/bash" ) )
 redrawMenu()
 
 -- Run processes
