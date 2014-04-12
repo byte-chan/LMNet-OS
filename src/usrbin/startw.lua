@@ -1,10 +1,10 @@
+local parentTerm = term.current()
 if not parentTerm then
 	print("The LMNet OS window system requires ComputerCraft 1.6.")
 	return
 end
 
 -- Setup process switching
-local parentTerm = term.current()
 local w,h = parentTerm.getSize()
 
 local tProcesses = {}
