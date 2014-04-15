@@ -21,6 +21,19 @@ else
 	bgColor = colors.black
 end
 
+local bashconfig = config.list("/.lmnet/bash.conf")
+if bashconfig then
+	if bashconfig.prompt and (term.isColor() or colors[bashconfig.prompt] == colors.black or colors[bashconfig.prompt] == colors.white) then
+		promptColor = colors[bashconfig.prompt]
+	end
+	if bashconfig.text and (term.isColor() or colors[bashconfig.prompt] == colors.black or colors[bashconfig.prompt] == colors.white) then
+		textColor = colors[bashconfig.text]
+	end
+	if bashconfig.bg and (term.isColor() or colors[bashconfig.prompt] == colors.black or colors[bashconfig.prompt] == colors.white) then
+		bgColor = colors[bashconfig.bg]
+	end
+end
+
 local tCommandHistory = {}
 while not bExit do
 	term.setBackgroundColor(bgColor)

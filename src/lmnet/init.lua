@@ -96,6 +96,28 @@ function readConfig(cfg)
 	end
 	return nil
 end
+function loadAPI(filename, loadas)
+	if not fs.exists(filename) then
+		return false
+	end
+	if not loadas then
+		loadas = fs.getName(filename)
+	end
+	local fenv = {}
+	setmetatable(fenv, {__index = _G})
+	local func, err = loadfile(filename)
+	if func then
+		setfenv(func, fenv)
+		func()
+	else
+		return false, err
+	end
+	local api = {}
+	for i, v in pairs(fenv) do
+		api[i] =  v
+	end
+	_G[loadas] = api
+end
 
 apiList = {}
 
@@ -174,9 +196,28 @@ if not fs.exists("/.lmnet/sys.conf") then
 	end
 end
 
+local timer = os.startTimer(0.5)
+while true do
+	local e, k = os.pullEvent()
+	if e == "timer" and k == timer then
+		break
+	elseif e == "key" and k == keys.leftCtrl then
+		lmnet_debug = true
+		break
+	end
+end
+
+if lmnet_debug then
+	clear()
+	print("LMNet OS debug mode")
+	shell.setDir(".lmnet")
+	shell.setPath(".:/rom/programs")
+	return
+end
+
 hostName = readConfig("hostname")
 os.version = function()
-	return "LMNet OS 1.0"
+	return "LMNet OS 1.1"
 end
 shell.run(".lmnet/login")
 clear()

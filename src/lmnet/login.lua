@@ -220,3 +220,6 @@ while currentUser == "login" do
 	sleep(0)
 end
 clear()
+if currentUser == "login" then
+	os.reboot()
+end
