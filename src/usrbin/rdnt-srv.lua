@@ -82,7 +82,7 @@ while true do
 		local msg = e[3]
 		if msg:sub(1, url:len()) == url and (msg:sub(url:len()+1, url:len()+1) == "" or msg:sub(url:len()+1, url:len()+1) == "/") then
 			local f = {string.gsub(msg, "[^/]+", "")}
-			if f[3] > 1 then
+			if f[2] > 1 then
 				local str = ""
 				for match in string.gmatch(msg, "[^/]+") do
 					if match ~= url then
