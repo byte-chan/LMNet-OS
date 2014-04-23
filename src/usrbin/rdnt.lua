@@ -62,7 +62,7 @@ function rdnt.goto(url)
 		if internalPages[url:sub(6)] ~= nil then
 			rdnt.currentURL = url
 			rdnt.clear()
-			internalPages[url:sub(6)]()
+			internalPage = url:sub(6)
 		else
 			rdnt.clear()
 			print("No internal page '"..url:sub(6).."'.")
@@ -74,7 +74,7 @@ function rdnt.goto(url)
 		if ok then
 			rdnt.currentURL = url
 			rdnt.clear()
-			shell.run("/.sitetmp")
+			siteLoaded = true
 		else
 			rdnt.clear()
 			print("Failed to connect to '"..url.."'.")
@@ -109,6 +109,14 @@ internalPages = {
 
 function main()
 	while running do
+		if siteLoaded then
+			siteLoaded = false
+			shell.run(".sitetmp")
+		end
+		if internalPage then
+			internalPages[internalPage]()
+			internalPage = nil
+		end
 		sleep(0)
 	end
 end
@@ -133,6 +141,8 @@ function rdntCmd()
 	end
 end
 
+local siteLoaded = false
+local internalPage
 rdnt.homeURL = "rdnt.home"
 rdnt.tryURL = ""
 rdnt.currentURL = ""
