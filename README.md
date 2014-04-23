@@ -8,4 +8,5 @@ Features:
 - login system!
 - random programs!
 - bash!
+- REDNET BROWSER!
 - and more...
