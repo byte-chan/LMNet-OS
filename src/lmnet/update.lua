@@ -116,6 +116,9 @@ end
 if not fs.exists("home") then
 	fs.makeDir("home")
 end
+if not fs.exists(".lmnet/apis/http") then
+	fs.makeDir(".lmnet/apis/http")
+end
 if not fs.exists(".lmnet/apis/turtle") then
 	fs.makeDir(".lmnet/apis/turtle")
 end
