@@ -55,6 +55,7 @@ while not bExit do
 		"~",
 		"/"..shell.dir()
 	)
+	term.clearLine()
 	local w, h = term.getSize()
 	if w < 30 and h < 25 then
 		write(
