@@ -34,8 +34,18 @@ while not urlOK do
 end
 
 local code = [[
--- rdnt-srv
+-- rdnt-srv 1.1
 -- Server software for rdnt
+
+if not fs.exists("site") then
+	term.clear()
+	term.setCursorPos(1, 1)
+	print("No main site found. Exiting.")
+	return
+end
+
+local oldPullEvent = os.pullEvent
+os.pullEvent = os.pullEventRaw
 
 for _, v in pairs(rs.getSides()) do
 	if peripheral.getType(v) == "modem" then
@@ -51,46 +61,60 @@ function clear()
 	term.setCursorPos(1, 1)
 end
 
+clear()
+
 function printLog(text)
 	local time = textutils.formatTime(os.time(), true)
 	print("["..string.rep(" ", 5-time:len())..time.."] "..text)
 end
+
+printLog("rdnt-srv 1.1 started")
 
 local file = fs.open("/site", "r")
 local site = file.readAll()
 file.close()
 
 while true do
-	local e = {rednet.receive()}
-	if e[2]:sub(1, url:len()) == url and (e[2]:sub(url:len()+1, url:len()+1) == "" or e[2]:sub(url:len()+1, url:len()+1) == "/") then
-		local f = {string.gsub(e[2], "[^/]+", "")}
-		if f[2] > 1 then
-			local str = ""
-			for match in string.gmatch(e[2], "[^/]+") do
-				if match ~= url then
-					str = str.."/"..match
+	local e = {os.pullEvent()}
+	local event = e[1]
+	if event == "rednet_message" then
+		local sender = e[2]
+		local msg = e[3]
+		if msg:sub(1, url:len()) == url and (msg:sub(url:len()+1, url:len()+1) == "" or msg:sub(url:len()+1, url:len()+1) == "/") then
+			local f = {string.gsub(msg, "[^/]+", "")}
+			if f[3] > 1 then
+				local str = ""
+				for match in string.gmatch(msg, "[^/]+") do
+					if match ~= url then
+						str = str.."/"..match
+					end
 				end
-			end
-			printLog("ID "..e[1].." wants "..str)
-			if fs.exists("/subsite"..str) then
-				local file = fs.open("/subsite"..str, "r")
-				rednet.send(e[1], file.readAll())
-				file.close()
-			else
-				if fs.exists("/404") then
-					local file = fs.open("/404", "r")
-					rednet.send(e[1], file.readAll())
+				printLog("ID "..sender.." wants "..str)
+				if fs.exists("/subsite"..str) then
+					local file = fs.open("/subsite"..str, "r")
+					rednet.send(sender, file.readAll())
 					file.close()
 				else
-					rednet.send(e[1], "print(\"404 Not Found\")\nprint(\"This file does not exist on this site.\")")
-				end
-					printLog("Reply to ID "..e[1]..": 404")
+					if fs.exists("/404") then
+						local file = fs.open("/404", "r")
+						rednet.send(sender, file.readAll())
+						file.close()
+					else
+						rednet.send(sender, "print(\"404 Not Found\")\nprint(\"This file does not exist on this site.\")")
+					end
+					printLog("Reply to ID "..sender..": 404")
 				end
 			else
-				rednet.send(e[1], site)
-				printLog("ID "..e[1].." wants main site")
+				rednet.send(sender, site)
+				printLog("ID "..sender.." wants main site")
 			end
-		printLog("Request by ID "..e[1]..": success.")
+			printLog("Request by ID "..sender..": success.")
+		end
+	elseif event == "terminate" then
+		printLog("Exiting.")
+		sleep(0.1)
+		os.pullEvent = oldPullEvent
+		return
 	end
 end
 ]]
@@ -99,5 +123,4 @@ local file = fs.open("startup", "w")
 file.write(code)
 file.close()
 
-print("rdnt-srv installed. Create the file 'site' if")
-print("it doesn't exist.")
+print("rdnt-srv installed. Create the file 'site' if it doesn't exist.")
