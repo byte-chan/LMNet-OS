@@ -34,6 +34,10 @@ if bashconfig then
 	end
 end
 
+shell.exit = function()
+	bExit = true
+end
+
 local tCommandHistory = {}
 while not bExit do
 	term.setBackgroundColor(bgColor)
@@ -70,5 +74,7 @@ while not bExit do
 	term.setTextColor(textColor)
 	local sLine = read(nil, tCommandHistory)
 	table.insert(tCommandHistory, sLine)
+	term.setTextColor(colors.white)
+	term.setBackgroundColor(colors.black)
 	shell.run(sLine)
 end
