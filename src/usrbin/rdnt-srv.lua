@@ -77,7 +77,7 @@ file.close()
 while true do
 	local e = {os.pullEvent()}
 	local event = e[1]
-	if event == "rednet_message" then
+	if event == "rednet_message" and type(e[3]) == "string" then
 		local sender = e[2]
 		local msg = e[3]
 		if msg:sub(1, url:len()) == url and (msg:sub(url:len()+1, url:len()+1) == "" or msg:sub(url:len()+1, url:len()+1) == "/") then
