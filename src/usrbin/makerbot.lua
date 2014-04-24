@@ -117,37 +117,40 @@ local makerbotActions = {
 		if height > 2 then
 			for y = 1, height-2 do
 				turtle.up()
-			for _ = 1, 2 do
-				for z = 1, depth do
-					while turtle.getItemCount() < 1 do
-						turtle.select(turtle.getSelectedSlot()+1)
+				for _ = 1, 2 do
+					for z = 1, depth do
+						while turtle.getItemCount() < 1 do
+							turtle.select(turtle.getSelectedSlot()+1)
+						end
+						if turtle.detectDown() and not turtle.compareDown() then
+							turtle.digDown()
+						end
+						if not turtle.detectDown() then
+							turtle.placeDown()
+						end
+						turtle.forward()
 					end
-					if turtle.detectDown() and not turtle.compareDown() then
-						turtle.digDown()
+					turtle.back()
+					turtle.turnRight()
+					for z = 1, width do
+						while turtle.getItemCount() < 1 do
+							turtle.select(turtle.getSelectedSlot()+1)
+						end
+						if turtle.detectDown() and not turtle.compareDown() then
+							turtle.digDown()
+						end
+						if not turtle.detectDown() then
+							turtle.placeDown()
+						end
+						turtle.forward()
 					end
-					if not turtle.detectDown() then
-						turtle.placeDown()
-					end
-					turtle.forward()
+					turtle.back()
+					turtle.turnRight()
 				end
-				turtle.back()
-				turtle.turnRight()
-				for z = 1, width do
-					while turtle.getItemCount() < 1 do
-						turtle.select(turtle.getSelectedSlot()+1)
-					end
-					if turtle.detectDown() and not turtle.compareDown() then
-						turtle.digDown()
-					end
-					if not turtle.detectDown() then
-						turtle.placeDown()
-					end
-					turtle.forward()
-				end
-				turtle.back()
-				turtle.turnRight()
 			end
 		end
+		
+		turtle.up()
 		
 		for x = 1, width do
 			for z = 1, depth do
