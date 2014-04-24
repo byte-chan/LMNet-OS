@@ -49,10 +49,16 @@ while not bExit do
 			return falseval
 		end
 	end
-	local dir = iif(shell.dir() == fs.combine(
-		systemDirs.users, currentUser
-	) or (shell.dir() == systemDirs.root and currentUser == "root"),
-		"~",
+	local userPath = iif(currentUser == "root", systemDirs.root, fs.combine(systemDirs.users, currentUser))
+	local dir = iif(
+		shell.dir() == userPath or (
+			shell.dir():sub(1, userPath:len()) == userPath and (
+				shell.dir():len() == userPath:len() or (
+					shell.dir():len() > userPath:len() and shell.dir():sub(userPath:len()+1, userPath:len()+1) == "/"
+				)
+			)
+		),
+		"~"..shell.dir():sub(userPath:len()+1),
 		"/"..shell.dir()
 	)
 	term.clearLine()
