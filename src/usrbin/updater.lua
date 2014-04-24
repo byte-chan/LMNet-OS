@@ -76,10 +76,9 @@ if not http then
 	return
 end
 
-local ok = getFile("src/lmnet/update.lua", ".update")
+local ok = getFile("src/lmnet/update.lua", "/.update")
 if not ok then
 	return
 end
 
-shell.run(".update")
-fs.delete(".update")
+shell.run("/.update")

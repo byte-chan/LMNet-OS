@@ -67,28 +67,7 @@ local function getFile(file, target)
 	end
 end
 
-getFile("version.txt", ".updaterVersionCheck")
-local remoteFile = fs.open(".updaterVersionCheck", "r")
-local remoteVersion = tonumber(remoteFile.readAll())
-remoteFile.close()
-local localFile = fs.open(".lmnetVersion", "r")
-local localVersion
-if not localFile then
-	localVersion = 0
-else
-	localVersion = tonumber(localFile.readAll())
-	localFile.close()
-end
-
-clear()
-
-local tArgs = {...}
-
-if remoteVersion <= localVersion and tArgs[1] ~= "--force" then
-	print("Running the latest version of LMNet OS.")
-	print("Run this program again with --force to reinstall LMNet OS.")
-	return
-end
+shell.setDir("")
 
 clear()
 
@@ -107,11 +86,11 @@ getFile("src/usrbin/lmlua.lua", "usr/bin/lmlua")
 getFile("src/usrbin/rdnt.lua", "usr/bin/rdnt")
 getFile("src/usrbin/rdnt-srv.lua", "usr/bin/rdnt-srv")
 getFile("src/usrbin/cd.lua", "usr/bin/cd")
+getFile("src/updater.lua", "usr/bin/updater")
 getFile("src/apis/git.lua", ".lmnet/apis/git")
 getFile("src/apis/packet.lua", ".lmnet/apis/packet")
 getFile("src/apis/config.lua", ".lmnet/apis/config")
 getFile("src/lmnet/login.lua", ".lmnet/login")
-getFile("src/updater.lua", "lmnet-updater")
 print("Creating missing directories...")
 if not fs.exists("root") then
 	fs.makeDir("root")

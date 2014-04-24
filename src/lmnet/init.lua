@@ -134,7 +134,7 @@ for _, v in pairs(systemDirs) do
 		clear()
 		fgSet(colors.red)
 		print("Missing directories!")
-		print("Reinstall LMNet OS or run 'lmnet-updater' to fix this problem.")
+		print("Reinstall LMNet OS or run 'updater' to fix this problem.")
 		fgSet(colors.white)
 		return
 	end
