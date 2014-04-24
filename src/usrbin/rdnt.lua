@@ -111,7 +111,7 @@ function main()
 	while running do
 		if siteLoaded then
 			siteLoaded = false
-			shell.run(".sitetmp")
+			shell.run("/.sitetmp")
 		end
 		if internalPage then
 			internalPages[internalPage]()
