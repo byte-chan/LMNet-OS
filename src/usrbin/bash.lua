@@ -38,6 +38,22 @@ shell.exit = function()
 	bExit = true
 end
 
+local tArgs = {...}
+if #tArgs > 0 then
+	for i = 1, #tArgs do
+		if tArgs[i] == "--init" then
+			if currentUser == "root" then
+				shell.setDir(shell.resolve(systemDirs.root))
+			else
+				shell.setDir(shell.resolve(fs.combine(systemDirs.users, currentUser)))
+				if not fs.exists(shell.dir()) then
+					fs.makeDir(shell.dir())
+				end
+			end
+		end
+	end
+end
+
 local tCommandHistory = {}
 while not bExit do
 	term.setBackgroundColor(bgColor)

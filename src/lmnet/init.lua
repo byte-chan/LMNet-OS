@@ -159,7 +159,7 @@ if http then
 end
 
 -- add applications directory to path
-updatePath(systemDirs.apps)
+updatePath(systemDirs.apps, true)
 
 currentUser = "login"
 hostName = "localhost"
@@ -224,5 +224,5 @@ clear()
 fgSet(colors.yellow)
 print(os.version())
 fgSet(colors.white)
-shell.run("/usr/bin/bash")
+shell.run("/usr/bin/bash", "--init")
 shell.run("/rom/programs/shutdown")
