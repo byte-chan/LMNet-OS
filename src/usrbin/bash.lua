@@ -65,7 +65,7 @@ while not bExit do
 			return falseval
 		end
 	end
-	local userPath = iif(currentUser == "root", systemDirs.root, fs.combine(systemDirs.users, currentUser))
+	local userPath = iif(currentUser == "root", systemDirs.root:sub(2), fs.combine(systemDirs.users, currentUser))
 	local dir = iif(
 		shell.dir() == userPath or (
 			shell.dir():sub(1, userPath:len()) == userPath and (
