@@ -7,6 +7,48 @@ end
 running = true
 rdnt = {}
 
+reDirect = rdnt.goto
+redirect = rdnt.goto
+showBar = function() end
+hideBar = function() end
+themeColor = function() end
+leftPrint = function(text)
+	print(text)
+end
+lPrint = leftPrint
+leftWrite = function(text)
+	write(text)
+end
+lWrite = leftWrite
+centerPrint = function(text)
+	local w, h = term.getSize()
+	local x, y = term.getCursorPos()
+	term.setCursorPos(math.floor(w/2-text:len()/2)+1, y)
+	print(text)
+end
+cPrint = centerPrint
+centerWrite = function(text)
+	local w, h = term.getSize()
+	local x, y = term.getCursorPos()
+	term.setCursorPos(math.floor(w/2-text:len()/2)+1, y)
+	write(text)
+end
+cWrite = centerWrite
+rightPrint = function(text)
+	local w, h = term.getSize()
+	local x, y = term.getCursorPos()
+	term.setCursorPos(w-text:len(), y)
+	print(text)
+end
+rPrint = rightPrint
+rightWrite = function(text)
+	local w, h = term.getSize()
+	local x, y = term.getCursorPos()
+	term.setCursorPos(w-text:len(), y)
+	write(text)
+end
+rWrite = rightWrite
+
 function clear()
 	term.clear()
 	term.setCursorPos(1, 1)
@@ -41,7 +83,7 @@ function rdnt.clear()
 	rdnt.bgColor(colors.black)
 	term.setCursorPos(1, 2)
 end
-rdnt.title = "rdnt v1.0"
+rdnt.title = "rdnt v1.1"
 function rdnt.requestImpl(url)
 	-- Not intended for regular use!
 	-- Use rdnt.goto(url) to go to a URL.
