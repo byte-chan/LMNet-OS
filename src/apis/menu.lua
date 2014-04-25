@@ -5,7 +5,9 @@ function show(items, title)
 	end
 	
 	local function cprint(text)
-		setCursor(math.floor(getSize().x/2)-math.floor(text:len()/2), getCursor().y)
+		local x, y = term.getCursorPos()
+		local w, h = term.getSize()
+		term.setCursorPos(math.floor(w/2)-math.floor(text:len()/2), y)
 		print(text)
 	end
 	
