@@ -1,4 +1,4 @@
-function show(items, title)
+function menu(items, title, start)
 	local function clear()
 		term.clear()
 		term.setCursorPos(1, 1)
@@ -46,6 +46,9 @@ function show(items, title)
 	end
 	
 	local selected = 1
+	if start then
+		selected = start
+	end
 	local page = 1
 	
 	local function redraw()
@@ -105,6 +108,69 @@ function show(items, title)
 				else
 					selected = selected + 10
 				end
+			end
+		end
+		sleep(0)
+	end
+end
+
+function yesno(text, title, start)
+	local function clear()
+		term.clear()
+		term.setCursorPos(1, 1)
+	end
+	
+	local function drawButton(buttonText, x, y, x2, y2, enabled)
+		if enabled then
+			term.setBackgroundColor(colors.white)
+		else
+			if term.isColor() then
+				term.setBackgroundColor(colors.gray)
+			end
+		end
+		term.setCursorPos(x, y)
+		for _y = y, y2 do
+			for _x = x, x2 do
+				write(" ")
+			end
+		end
+		term.setCursorPos(math.floor((x2-x+1)/2)-math.floor(buttonText:len()/2)+2, math.floor((y2-y+1)/2)+2)
+		write(buttonText)
+		term.setBackgroundColor(colors.black)
+	end
+	
+	local function cprint(text)
+		local x, y = term.getCursorPos()
+		local w, h = term.getSize()
+		term.setCursorPos(math.floor(w/2)-math.floor(text:len()/2), y)
+		print(text)
+	end
+	
+	local function redraw()
+		clear()
+		cprint(title)
+		term.setCursorPos(1, 3)
+		print(text)
+		local w, h = term.getSize()
+		drawButton("Yes", 2, h-1, math.floor(w/2)-1, h-1, selected)
+		drawButton("No", 2, h-1, math.floor(w/2)-1, h-1, not selected)
+	end
+	
+	local selected = true
+	if start ~= nil and type(start) == "boolean" then
+		selected = start
+	end
+	while true do
+		redraw()
+		local eventData = {os.pullEventRaw()}
+		if eventData[1] == "terminate" then
+			clear()
+			return
+		elseif eventData[1] == "key" then
+			if eventData[2] == keys.up or eventData[2] == keys.down or eventData[2] == keys.left or eventData[2] == keys.right then
+				selected = not selected
+			elseif eventData[2] == keys.enter then
+				return selected
 			end
 		end
 		sleep(0)
