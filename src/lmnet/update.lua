@@ -97,7 +97,7 @@ getFile("src/usrbin/updater.lua", "usr/bin/updater")
 getFile("src/apis/git.lua", ".lmnet/apis/git")
 getFile("src/apis/packet.lua", ".lmnet/apis/packet")
 getFile("src/apis/config.lua", ".lmnet/apis/config")
-getFile("src/apis/menu.lua", ".lmnet/apis/menu")
+getFile("src/apis/ui.lua", ".lmnet/apis/ui")
 getFile("src/lmnet/login.lua", ".lmnet/login")
 print("Creating missing directories...")
 if not fs.exists("root") then
