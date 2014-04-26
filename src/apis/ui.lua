@@ -131,6 +131,7 @@ function yesno(text, title, start)
 		term.setCursorPos(x, y)
 		for _y = y, y2 do
 			for _x = x, x2 do
+				term.setCursorPos(_x, _y)
 				write(" ")
 			end
 		end
