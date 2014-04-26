@@ -171,6 +171,7 @@ function yesno(text, title, start)
 			if eventData[2] == keys.up or eventData[2] == keys.down or eventData[2] == keys.left or eventData[2] == keys.right then
 				selected = not selected
 			elseif eventData[2] == keys.enter then
+				clear()
 				return selected
 			end
 		end
