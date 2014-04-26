@@ -154,7 +154,7 @@ function yesno(text, title, start)
 		print(text)
 		local w, h = term.getSize()
 		drawButton("Yes", 2, h-1, math.floor(w/2)-1, h-1, selected)
-		drawButton("No", 2, h-1, math.floor(w/2)-1, h-1, not selected)
+		drawButton("No", math.floor(w/2)+1, h-1, w-1, h-1, not selected)
 	end
 	
 	local selected = true
