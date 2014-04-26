@@ -147,6 +147,8 @@ function yesno(text, title, start)
 		print(text)
 	end
 	
+	local selected = true
+	
 	local function redraw()
 		clear()
 		cprint(title)
@@ -157,7 +159,6 @@ function yesno(text, title, start)
 		drawButton("No", math.floor(w/2)+1, h-1, w-1, h-1, not selected)
 	end
 	
-	local selected = true
 	if start ~= nil and type(start) == "boolean" then
 		selected = start
 	end
