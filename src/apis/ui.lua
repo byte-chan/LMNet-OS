@@ -135,7 +135,7 @@ function yesno(text, title, start)
 				write(" ")
 			end
 		end
-		term.setCursorPos(math.floor((x2-x+1)/2)-math.floor(buttonText:len()/2)+2, math.floor((y2-y+1)/2)+2)
+		term.setCursorPos(x+math.floor((x2-x+1)/2)-math.floor(buttonText:len()/2)+2, y+math.floor((y2-y+1)/2)+2)
 		write(buttonText)
 		term.setBackgroundColor(colors.black)
 	end
