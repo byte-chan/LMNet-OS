@@ -84,7 +84,7 @@ while true do
 		local tmp = {string.gsub(msg, "[^?]+", "")}
 		if tmp[2] > 1 then
 			local matches = {}
-			for match in string.gmatch(msg, "[^?]+")} do
+			for match in string.gmatch(msg, "[^?]+") do
 				table.insert(matches, match)
 			end
 			local rawData = matches[2]
