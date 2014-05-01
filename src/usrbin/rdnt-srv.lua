@@ -112,7 +112,7 @@ while true do
 				for match in string.gmatch(msg, "[^?]+") do
 					table.insert(matches, match)
 				end
-				for match in string.gmatch(match[1], "[^/]+") do
+				for match in string.gmatch(matches[1], "[^/]+") do
 					if match ~= url then
 						str = str.."/"..match
 					end
