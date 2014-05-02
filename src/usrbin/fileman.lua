@@ -43,6 +43,7 @@ local function files()
 			end
 		end
 	end
+	return true
 end
 
 local running = true
