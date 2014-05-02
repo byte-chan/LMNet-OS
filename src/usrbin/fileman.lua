@@ -26,8 +26,10 @@ local function files()
 			if selectedAction then
 				if selectedAction == "Go to" then
 					shell.setDir(shell.resolve(selected))
+					return true
 				elseif selectedAction == "Delete" then
 					fs.delete(shell.resolve(selected))
+					return true
 				end
 			end
 		else
@@ -35,15 +37,18 @@ local function files()
 			if selectedAction then
 				if selectedAction == "Run" then
 					shell.run(selected)
+					return true
 				elseif selectedAction == "Edit" then
 					shell.run("edit \""..selected.."\"")
+					return true
 				elseif selectedAction == "Delete" then
 					fs.delete(shell.resolve(selected))
+					return true
 				end
 			end
 		end
 	end
-	return true
+	return false
 end
 
 local running = true
