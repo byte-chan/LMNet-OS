@@ -39,6 +39,9 @@ function updatePath(dir, prepend)
 	end
 end
 function loadAPIs(dir)
+	if not fs.isDir(dir) then
+		return
+	end
 	for _, v in pairs(fs.list(dir)) do
 		if not fs.isDir(fs.combine(dir, v)) then
 			os.loadAPI(fs.combine(dir, v))
@@ -51,16 +54,10 @@ function bgSet(color)
 		term.setBackgroundColor(color)
 	end
 end
-function bgGet()
-	return term.getBackgroundColor()
-end
 function fgSet(color)
 	if color == colors.black or color == colors.white or term.isColor() then
 		term.setTextColor(color)
 	end
-end
-function fgGet()
-	return term.getTextColor()
 end
 function readConfig(cfg)
 	local file = fs.open("/.lmnet/sys.conf", "r")
@@ -165,20 +162,16 @@ currentUser = "login"
 hostName = "localhost"
 
 if not fs.exists("/.lmnet/sys.conf") then
-	write("Create system config? [Yn] ")
+	print("Create system config?")
+	write("[Yn] ")
 	local input = string.lower(read())
 	if input ~= "y" and input ~= "" then
 		clear()
 		print("No config found.")
 		print("Press any key to continue")
-		while true do
-			local e = os.pullEvent("key")
-			if e == "key" then
-				sleep(1)
-				os.shutdown()
-			end
-			sleep(0)
-		end
+		os.pullEvent("key")
+		sleep(1)
+		os.shutdown()
 	end
 	clear()
 	write("Host name: ")

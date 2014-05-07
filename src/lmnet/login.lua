@@ -193,10 +193,16 @@ while currentUser == "login" do
 				else
 					currentUser = users[selected].user
 					os.pullEvent = oldPullEvent
+					if fs.exists(fs.combine(currentUser == "root" and systemDirs.root or fs.combine(systemDirs.users, currentUser), "startup")) then
+						shell.run(fs.combine(currentUser == "root" and systemDirs.root or fs.combine(systemDirs.users, currentUser), "startup"))
+					end
 				end
 			else
 				currentUser = users[selected].user
 				os.pullEvent = oldPullEvent
+				if fs.exists(fs.combine(currentUser == "root" and systemDirs.root or fs.combine(systemDirs.users, currentUser), "startup")) then
+					shell.run(fs.combine(currentUser == "root" and systemDirs.root or fs.combine(systemDirs.users, currentUser), "startup"))
+				end
 			end
 		elseif eventData[2] == keys.left and page > 1 then
 			page = page - 1

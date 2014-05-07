@@ -21,27 +21,31 @@ else
 	bgColor = colors.black
 end
 
-local bashconfig = config.list("/.lmnet/bash.conf")
-if bashconfig then
-	if bashconfig.prompt and (term.isColor() or colors[bashconfig.prompt] == colors.black or colors[bashconfig.prompt] == colors.white) then
-		promptColor = colors[bashconfig.prompt]
-	end
-	if bashconfig.text and (term.isColor() or colors[bashconfig.prompt] == colors.black or colors[bashconfig.prompt] == colors.white) then
-		textColor = colors[bashconfig.text]
-	end
-	if bashconfig.bg and (term.isColor() or colors[bashconfig.prompt] == colors.black or colors[bashconfig.prompt] == colors.white) then
-		bgColor = colors[bashconfig.bg]
+if config then
+	local bashconfig = config.list("/.lmnet/bash.conf")
+	if bashconfig then
+		if bashconfig.prompt and (term.isColor() or colors[bashconfig.prompt] == colors.black or colors[bashconfig.prompt] == colors.white) then
+			promptColor = colors[bashconfig.prompt]
+		end
+		if bashconfig.text and (term.isColor() or colors[bashconfig.prompt] == colors.black or colors[bashconfig.prompt] == colors.white) then
+			textColor = colors[bashconfig.text]
+		end
+		if bashconfig.bg and (term.isColor() or colors[bashconfig.prompt] == colors.black or colors[bashconfig.prompt] == colors.white) then
+			bgColor = colors[bashconfig.bg]
+		end
 	end
 end
-
-shell.exit = function()
-	bExit = true
+if not currentUser then
+	currentUser = "user"
+end
+if not hostName then
+	hostName = "localhost"
 end
 
 local tArgs = {...}
 if #tArgs > 0 then
-	for i = 1, #tArgs do
-		if tArgs[i] == "--init" then
+	while next(tArgs) do
+		if tArgs[1] == "--init" then
 			if currentUser == "root" then
 				shell.setDir(shell.resolve(systemDirs.root))
 			else
@@ -50,7 +54,10 @@ if #tArgs > 0 then
 					fs.makeDir(shell.dir())
 				end
 			end
+		else
+			shell.run(tArgs[1])
 		end
+		table.remove(tArgs, 1)
 	end
 end
 
@@ -99,5 +106,8 @@ while not bExit do
 	table.insert(tCommandHistory, sLine)
 	term.setTextColor(colors.white)
 	term.setBackgroundColor(colors.black)
+	shell.exit = function()
+		bExit = true
+	end
 	shell.run(sLine)
 end
