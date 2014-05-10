@@ -28,6 +28,7 @@ if not fs.exists(".remoteBind") or (#tArgs > 0 and tArgs[1] == "--rebind") then
  end
  local file = fs.open(".remoteBind", "w")
  file.write(tostring(input))
+ file.close()
  print("Bound to computer ID "..input..".")
 end
 
