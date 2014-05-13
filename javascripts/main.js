@@ -1,1 +1,2 @@
-console.log('This would be the main JS file.');
+console.log('LMNet OS 1.1');
+console.log('main.js:2: attempt to run LMNet OS in JavaScript');
