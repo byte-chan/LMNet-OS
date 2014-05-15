@@ -2,10 +2,10 @@ function get(user, repo, bran, path, save)
 	if not user or not repo or not bran or not path then
 		error("not enough arguments, expected 4 or 5", 2)
 	end
-    local url = "https://raw.github.com/"..user.."/"..repo.."/".."/"..bran.."/"..path
+    local url = "https://raw.github.com/"..user.."/"..repo.."/"..bran.."/"..path
 	local remote = http.get(url)
 	if not remote then
-		error("error downloading file", 2)
+		return false
 	end
 	local text = remote.readAll()
 	remote.close()
