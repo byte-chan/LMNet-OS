@@ -45,6 +45,7 @@ local files = {
 	["src/usrbin/delete.lua"] = "usr/bin/delete",
 	["src/usrbin/echo.lua"] = "usr/bin/echo",
 	["src/usrbin/fileman.lua"] = "usr/bin/fileman",
+	["src/usrbin/git.lua"] = "usr/bin/git",
 	["src/usrbin/list.lua"] = "usr/bin/list",
 	["src/usrbin/lmlua.lua"] = "usr/bin/lmlua",
 	["src/usrbin/loader.lua"] = "usr/bin/loader",
