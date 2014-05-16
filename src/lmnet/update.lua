@@ -81,7 +81,7 @@ for k, v in pairs(files) do
 	print("File: "..v)
 	local w, h = term.getSize()
 	term.setCursorPos(2, h - 1)
-	print(tostring(math.floor(filesDownloaded / fileCount)*100).."% - "..tostring(filesDownloaded + 1).."/"..tostring(fileCount))
+	print(tostring(math.floor(filesDownloaded / fileCount * 100)).."% - "..tostring(filesDownloaded + 1).."/"..tostring(fileCount))
 	local ok = getFile(k, v)
 	if not ok then
 		if term.isColor() then
