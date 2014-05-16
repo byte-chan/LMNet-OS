@@ -67,7 +67,7 @@ local files = {
 	["src/apis/ui.lua"] = ".lmnet/apis/ui",
 }
 local fileCount = 0
-for _, in pairs(files) do
+for _ in pairs(files) do
 	fileCount = fileCount + 1
 end
 local filesDownloaded = 0
