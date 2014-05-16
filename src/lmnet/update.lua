@@ -66,6 +66,7 @@ local files = {
 	["src/apis/packet.lua"] = ".lmnet/apis/packet",
 	["src/apis/ui.lua"] = ".lmnet/apis/ui",
 }
+local filesDownloaded = 0
 for k, v in pairs(files) do
 	term.setTextColor(colors.black)
 	term.setBackgroundColor(colors.white)
@@ -74,14 +75,19 @@ for k, v in pairs(files) do
 	print("LMNet OS Updater")
 	term.setCursorPos(2, 4)
 	print("File: "..v)
+	local w, h = term.getSize()
+	term.setCursorPos(2, h - 1)
+	print(tostring(math.floor(filesDownloaded / #files)*100).."% - "..tostring(filesDownloaded + 1).."/"..tostring(#files))
 	local ok = getFile(k, v)
 	if not ok then
 		if term.isColor() then
 			term.setTextColor(colors.red)
 		end
+		term.setCursorPos(2, 6)
 		print("Error.")
 		sleep(1)
 	end
+	filesDownloaded = filesDownloaded + 1
 end
 term.setTextColor(colors.white)
 term.setBackgroundColor(colors.black)
