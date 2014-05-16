@@ -66,6 +66,10 @@ local files = {
 	["src/apis/packet.lua"] = ".lmnet/apis/packet",
 	["src/apis/ui.lua"] = ".lmnet/apis/ui",
 }
+local fileCount = 0
+for _, in pairs(files) do
+	fileCount = fileCount + 1
+end
 local filesDownloaded = 0
 for k, v in pairs(files) do
 	term.setTextColor(colors.black)
@@ -77,7 +81,7 @@ for k, v in pairs(files) do
 	print("File: "..v)
 	local w, h = term.getSize()
 	term.setCursorPos(2, h - 1)
-	print(tostring(math.floor(filesDownloaded / #files)*100).."% - "..tostring(filesDownloaded + 1).."/"..tostring(#files))
+	print(tostring(math.floor(filesDownloaded / fileCount)*100).."% - "..tostring(filesDownloaded + 1).."/"..tostring(fileCount))
 	local ok = getFile(k, v)
 	if not ok then
 		if term.isColor() then
