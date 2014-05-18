@@ -32,7 +32,7 @@ while running do
 			if data then
 				if data["mode"] == "netfile" then
 					printLog("File received by "..e[2])
-					local file = fs.open(data["name"])
+					local file = fs.open(data["name"], "w")
 					file.write(data["content"])
 					file.close()
 					printLog("Saved as "..data["name"])
