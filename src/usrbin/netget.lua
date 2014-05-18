@@ -39,7 +39,7 @@ while running do
 				end
 			end
 		end
-	end
+	end)
 	if not ok then
 		printLog("Exiting.")
 		printLog("("..err..")")
