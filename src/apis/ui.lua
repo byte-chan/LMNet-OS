@@ -63,7 +63,7 @@ function menu(items, title, start)
 		print("Terminate to cancel.")
 		print("(page "..page.." of "..maxPages()..")")
 		for i = 1, #pagedItems()[page] do
-			if selected == 10*(page-1)+i then
+			if selected == drawSize*(page-1)+i then
 				term.setBackgroundColor(colors.white)
 				term.setTextColor(colors.black)
 			else
