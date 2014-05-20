@@ -11,11 +11,14 @@ function menu(items, title, start)
 		print(text)
 	end
 	
+	local termWidth, termHeight = term.getSize()
+	local drawSize = termHeight - 6
+	
 	local function maxPages()
 		local itemCount = #items
 		local pageCount = 0
 		while itemCount > 0 do
-			itemCount = itemCount - 10
+			itemCount = itemCount - drawSize
 			pageCount = pageCount + 1
 		end
 		return pageCount
@@ -34,8 +37,8 @@ function menu(items, title, start)
 		for i = 1, maxPages() do
 			local tmp = {}
 			local nElements = 0
-			for j = 10*(i-1)+1, iif(10*(i+1) > #items, #items, 10*(i+1)) do
-				if nElements < 10 then
+			for j = drawSize*(i-1)+1, iif(drawSize*(i+1) > #items, #items, drawSize*(i+1)) do
+				if nElements < drawSize then
 					table.insert(tmp, items[j])
 					nElements = nElements + 1
 				end
@@ -68,7 +71,7 @@ function menu(items, title, start)
 				term.setTextColor(colors.white)
 			end
 			term.clearLine()
-			print(iif(selected == 10*(page-1)+i, ">", " ").." "..pagedItems()[page][i])
+			print(iif(selected == drawSize*(page-1)+i, ">", " ").." "..pagedItems()[page][i])
 			term.setBackgroundColor(colors.black)
 			term.setTextColor(colors.white)
 		end
@@ -83,12 +86,12 @@ function menu(items, title, start)
 		elseif eventData[1] == "key" then
 			if eventData[2] == keys.up and selected > 1 then
 				selected = selected - 1
-				if selected-(page-1)*10 < 1 then
+				if selected-(page-1)*drawSize < 1 then
 					page = page - 1
 				end
 			elseif eventData[2] == keys.down and selected < #items then
 				selected = selected + 1
-				if selected-(page-1)*10 > 10 then
+				if selected-(page-1)*drawSize > drawSize then
 					page = page + 1
 				end
 			elseif eventData[2] == keys.enter then
@@ -96,17 +99,17 @@ function menu(items, title, start)
 				return items[selected]
 			elseif eventData[2] == keys.left and page > 1 then
 				page = page - 1
-				if selected - 10 < 1 then
+				if selected - drawSize < 1 then
 					selected = 1
 				else
-					selected = selected - 10
+					selected = selected - drawSize
 				end
 			elseif eventData[2] == keys.right and page < maxPages() then
 				page = page + 1
-				if selected + 10 > #items then
+				if selected + drawSize > #items then
 					selected = #items
 				else
-					selected = selected + 10
+					selected = selected + drawSize
 				end
 			end
 		end
