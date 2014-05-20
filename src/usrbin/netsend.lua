@@ -17,18 +17,21 @@ if #tArgs < 2 then
 	return
 end
 
-if not fs.exists(tArgs[1]) then
+local filepath = shell.resolve(tArgs[1])
+
+if not fs.exists(filepath) then
 	printError("File not found")
 	return
 end
 
-if fs.isDir(tArgs[1]) then
+if fs.isDir(filepath) then
 	printError("Is a directory")
 	return
 end
 
-local file = fs.open(tArgs[1], "r")
+local file = fs.open(filepath, "r")
 local str = file.readAll()
 file.close()
 
 rednet.broadcast(textutils.serialize({mode = "netfile", name = tArgs[2], content = str}))
+print("File sent.")
