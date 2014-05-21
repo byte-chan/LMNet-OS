@@ -138,8 +138,10 @@ function yesno(text, title, start)
 				write(" ")
 			end
 		end
-		term.setCursorPos(x+math.floor((x2-x+1)/2)-math.floor(buttonText:len()/2)+2, y+math.floor((y2-y+1)/2)+2)
+		term.setCursorPos(x+math.floor((x2-x)/2)-math.floor(buttonText:len()/2), y+math.floor((y2-y+1)/2))
+		term.setTextColor(colors.black)
 		write(buttonText)
+		term.setTextColor(colors.white)
 		term.setBackgroundColor(colors.black)
 	end
 	
