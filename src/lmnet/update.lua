@@ -43,6 +43,7 @@ local files = {
 	["src/usrbin/cd.lua"] = "usr/bin/cd",
 	["src/usrbin/copy.lua"] = "usr/bin/copy",
 	["src/usrbin/delete.lua"] = "usr/bin/delete",
+	["src/usrbin/dupe.lua"] = "usr/bin/dupe",
 	["src/usrbin/echo.lua"] = "usr/bin/echo",
 	["src/usrbin/fileman.lua"] = "usr/bin/fileman",
 	["src/usrbin/git.lua"] = "usr/bin/git",
