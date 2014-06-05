@@ -107,6 +107,7 @@ local files = {
 	["src/lmnet/login.lua"] = ".lmnet/login",
 	["src/lmnet/update.lua"] = ".lmnet/update",
 	["src/usrbin/bash.lua"] = "usr/bin/bash",
+	["src/usrbin/calc.lua"] = "usr/bin/calc",
 	["src/usrbin/cat.lua"] = "usr/bin/cat",
 	["src/usrbin/cd.lua"] = "usr/bin/cd",
 	["src/usrbin/copy.lua"] = "usr/bin/copy",

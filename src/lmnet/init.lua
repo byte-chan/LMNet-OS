@@ -177,6 +177,7 @@ if not fs.exists("/.lmnet/sys.conf") then
 	write("Host name: ")
 	local file = fs.open("/.lmnet/sys.conf", "w")
 	file.writeLine("hostname=\""..read().."\"")
+	file.writeLine("debug=false")
 	file.close()
 	print("Press any key to continue")
 	while true do
@@ -189,14 +190,16 @@ if not fs.exists("/.lmnet/sys.conf") then
 	end
 end
 
-local timer = os.startTimer(0.5)
-while true do
-	local e, k = os.pullEvent()
-	if e == "timer" and k == timer then
-		break
-	elseif e == "key" and k == keys.leftCtrl then
-		lmnet_debug = true
-		break
+if config.read("debug") then
+	local timer = os.startTimer(0.5)
+	while true do
+		local e, k = os.pullEvent()
+		if e == "timer" and k == timer then
+			break
+		elseif e == "key" and k == keys.leftCtrl then
+			lmnet_debug = true
+			break
+		end
 	end
 end
 
@@ -209,6 +212,9 @@ if lmnet_debug then
 end
 
 hostName = readConfig("hostname")
+if config.read("showCalc") and term.isColor() then
+	shell.openTab("/usr/bin/calc")
+end
 os.version = function()
 	return "LMNet OS 1.1"
 end

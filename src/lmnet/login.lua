@@ -195,6 +195,8 @@ while currentUser == "login" do
 					os.pullEvent = oldPullEvent
 					if fs.exists(fs.combine(currentUser == "root" and systemDirs.root or fs.combine(systemDirs.users, currentUser), "startup")) then
 						shell.run(fs.combine(currentUser == "root" and systemDirs.root or fs.combine(systemDirs.users, currentUser), "startup"))
+						print("Press any key to continue")
+						os.pullEvent("key")
 					end
 				end
 			else
@@ -202,6 +204,8 @@ while currentUser == "login" do
 				os.pullEvent = oldPullEvent
 				if fs.exists(fs.combine(currentUser == "root" and systemDirs.root or fs.combine(systemDirs.users, currentUser), "startup")) then
 					shell.run(fs.combine(currentUser == "root" and systemDirs.root or fs.combine(systemDirs.users, currentUser), "startup"))
+					print("Press any key to continue")
+					os.pullEvent("key")
 				end
 			end
 		elseif eventData[2] == keys.left and page > 1 then
