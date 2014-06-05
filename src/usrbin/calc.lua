@@ -20,7 +20,7 @@ local handle = {
 	end,
 	["="] = function()
 		ok, out = pcall(loadstring("return "..input.." or \"ERROR\"", "calc"))
-		if not ok then input = "ERROR" else input = out end
+		if not ok then input = "ERROR" else input = tostring(out) end
 	end,
 	["x"] = function() running = false end
 }
