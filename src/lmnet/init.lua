@@ -178,6 +178,7 @@ if not fs.exists("/.lmnet/sys.conf") then
 	local file = fs.open("/.lmnet/sys.conf", "w")
 	file.writeLine("hostname=\""..read().."\"")
 	file.writeLine("debug=false")
+	file.writeLine("showCalc=true")
 	file.close()
 	print("Press any key to continue")
 	while true do
