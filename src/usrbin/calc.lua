@@ -67,6 +67,7 @@ local function redraw()
 end
 
 while running do
+	input = tostring(input)
 	redraw()
 	detectClick()
 	clear()

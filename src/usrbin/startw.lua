@@ -1,4 +1,4 @@
-local parentTerm = term.current()
+local parentTerm = term.current and term.current() or nil
 if not parentTerm then
 	print("The LMNet OS window system requires ComputerCraft 1.6.")
 	return
