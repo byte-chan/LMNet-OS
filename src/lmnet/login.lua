@@ -164,6 +164,12 @@ end
 local oldPullEvent = os.pullEvent
 os.pullEvent = os.pullEventRaw
 
+local tArgs = {...}
+
+if config.read(nil, "autoLogin") and tArgs[1] ~= "--switch" then
+	currentUser = config.read(nil, "autoLogin")
+end
+
 while currentUser == "login" do
 	redraw()
 	local eventData = {os.pullEventRaw()}
