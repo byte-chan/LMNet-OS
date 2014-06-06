@@ -191,7 +191,7 @@ if not fs.exists("/.lmnet/sys.conf") then
 	end
 end
 
-if config.read("debug") then
+if config.read(nil, "debug") then
 	local timer = os.startTimer(0.5)
 	while true do
 		local e, k = os.pullEvent()
@@ -213,7 +213,7 @@ if lmnet_debug then
 end
 
 hostName = readConfig("hostname")
-if config.read("showCalc") and term.isColor() then
+if config.read(nil, "showCalc") and term.isColor() then
 	shell.openTab("/usr/bin/calc")
 end
 os.version = function()
