@@ -131,6 +131,7 @@ local files = {
 	["src/usrbin/remotecl.lua"] = "usr/bin/remotecl",
 	["src/usrbin/remotesv.lua"] = "usr/bin/remotesv",
 	["src/usrbin/startw.lua"] = "usr/bin/startw",
+	["src/usrbin/switch.lua"] = "usr/bin/switch",
 	["src/usrbin/updater.lua"] = "usr/bin/updater",
 	["src/usrbin/userctl.lua"] = "usr/bin/userctl",
 	["src/apis/config.lua"] = ".lmnet/apis/config",

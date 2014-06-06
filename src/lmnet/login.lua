@@ -168,6 +168,14 @@ local tArgs = {...}
 
 if config.read(nil, "autoLogin") and tArgs[1] ~= "--switch" then
 	currentUser = config.read(nil, "autoLogin")
+	currentUser = users[selected].user
+	os.pullEvent = oldPullEvent
+	if fs.exists(fs.combine(currentUser == "root" and systemDirs.root or fs.combine(systemDirs.users, currentUser), "startup")) then
+		clear()
+		shell.run(fs.combine(currentUser == "root" and systemDirs.root or fs.combine(systemDirs.users, currentUser), "startup"))
+		print("Press any key to continue")
+		os.pullEvent("key")
+	end
 end
 
 while currentUser == "login" do
@@ -200,6 +208,7 @@ while currentUser == "login" do
 					currentUser = users[selected].user
 					os.pullEvent = oldPullEvent
 					if fs.exists(fs.combine(currentUser == "root" and systemDirs.root or fs.combine(systemDirs.users, currentUser), "startup")) then
+						clear()
 						shell.run(fs.combine(currentUser == "root" and systemDirs.root or fs.combine(systemDirs.users, currentUser), "startup"))
 						print("Press any key to continue")
 						os.pullEvent("key")
@@ -209,6 +218,7 @@ while currentUser == "login" do
 				currentUser = users[selected].user
 				os.pullEvent = oldPullEvent
 				if fs.exists(fs.combine(currentUser == "root" and systemDirs.root or fs.combine(systemDirs.users, currentUser), "startup")) then
+					clear()
 					shell.run(fs.combine(currentUser == "root" and systemDirs.root or fs.combine(systemDirs.users, currentUser), "startup"))
 					print("Press any key to continue")
 					os.pullEvent("key")
