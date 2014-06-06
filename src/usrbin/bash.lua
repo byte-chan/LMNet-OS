@@ -41,6 +41,12 @@ end
 if not hostName then
 	hostName = "localhost"
 end
+if not systemDirs then
+	systemDirs = {
+		root = "",
+		users = "",
+	}
+end
 
 local tArgs = {...}
 if #tArgs > 0 then
