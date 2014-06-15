@@ -1,14 +1,24 @@
+function cprint(text)
+	--convert string into a table (for more than one line
+	if type(text) ~= 'table' then
+		text = {text}
+	end
+	
+	local w, h = term.getSize()
+	
+	--do it for every element
+	for i=1,#text do
+		local x, y = term.getCursorPos()
+		term.setCursorPos(math.floor(w/2)-math.floor(text[i]:len()/2), y)
+		print(text[i])
+	end
+end
+
+
 function menu(items, title, start)
 	local function clear()
 		term.clear()
 		term.setCursorPos(1, 1)
-	end
-	
-	local function cprint(text)
-		local x, y = term.getCursorPos()
-		local w, h = term.getSize()
-		term.setCursorPos(math.floor(w/2)-math.floor(text:len()/2), y)
-		print(text)
 	end
 	
 	local termWidth, termHeight = term.getSize()
@@ -143,13 +153,6 @@ function yesno(text, title, start)
 		write(buttonText)
 		term.setTextColor(colors.white)
 		term.setBackgroundColor(colors.black)
-	end
-	
-	local function cprint(text)
-		local x, y = term.getCursorPos()
-		local w, h = term.getSize()
-		term.setCursorPos(math.floor(w/2)-math.floor(text:len()/2), y)
-		print(text)
 	end
 	
 	local selected = true
