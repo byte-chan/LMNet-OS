@@ -12,7 +12,6 @@ function cprint(text)
 	end
 end
 
-
 function menu(items, title, start)
 	local function clear()
 		term.clear()
