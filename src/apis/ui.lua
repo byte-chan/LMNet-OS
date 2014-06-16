@@ -1,12 +1,10 @@
 function cprint(text)
-	--convert string into a table (for more than one line
 	if type(text) ~= 'table' then
 		text = {text}
 	end
 	
 	local w, h = term.getSize()
 	
-	--do it for every element
 	for i=1,#text do
 		local x, y = term.getCursorPos()
 		term.setCursorPos(math.floor(w/2)-math.floor(text[i]:len()/2), y)
