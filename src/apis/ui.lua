@@ -69,7 +69,7 @@ function menu(items, title, start,allowNil,moreTitle)
 			head = moreTitle
 		else
 			head = {"Select with arrow keys or with mouse.","Press enter to select.",}
-			if allowNil and allowNil == false then
+			if not allowNil or allowNil == true then
 				head[3] = 'Terminate to cancel.'
 			end
 		end
@@ -115,7 +115,7 @@ function menu(items, title, start,allowNil,moreTitle)
 		redraw()
 		local eventData = {os.pullEventRaw()}
 		if eventData[1] == "terminate" then
-			if allowNil and allowNil == true then
+			if not allowNil or allowNil == true then
 				clear()
 				return nil
 			end
