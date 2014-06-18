@@ -12,7 +12,7 @@ function cprint(text)
 	end
 end
 
-function menu(items, title, start)
+function menu(items, title, start,allowNil,moreTitle)
 	local function clear()
 		term.clear()
 		term.setCursorPos(1, 1)
@@ -65,10 +65,19 @@ function menu(items, title, start)
 		term.setBackgroundColor(colors.black)
 		clear()
 		cprint(title)
-		print("Select with arrow keys.")
-		print("Press enter to select.")
-		print("Terminate to cancel.")
-		print("(page "..page.." of "..maxPages()..")")
+		if moreTitle then
+			head = moreTitle
+		else
+			head = {"Select with arrow keys or with mouse.","Press enter to select.",}
+			if allowNil and allowNil == false then
+				head[3] = 'Terminate to cancel.'
+			end
+		end
+		for i=1,3 do
+			print(head[i])
+		end
+		pages = "<- (page "..page.." of "..maxPages()..") ->"
+		print(pages)
 		for i = 1, #pagedItems()[page] do
 			if selected == drawSize*(page-1)+i then
 				term.setBackgroundColor(colors.white)
@@ -83,13 +92,33 @@ function menu(items, title, start)
 			term.setTextColor(colors.white)
 		end
 	end
+
+	local function changePage(pW)
+		if pW == 1 and page < maxPages() then
+			page = page + 1
+			if selected + drawSize > #items then
+				selected = #items
+			else
+				selected = selected + drawSize
+			end
+		elseif pW == -1 and page > 1 then
+			page = page - 1
+			if selected - drawSize < 1 then
+				selected = 1
+			else
+				selected = selected - drawSize
+			end
+		end
+	end
 	
 	while true do
 		redraw()
 		local eventData = {os.pullEventRaw()}
 		if eventData[1] == "terminate" then
-			clear()
-			return nil
+			if allowNil and allowNil == true then
+				clear()
+				return nil
+			end
 		elseif eventData[1] == "key" then
 			if eventData[2] == keys.up and selected > 1 then
 				selected = selected - 1
@@ -104,20 +133,28 @@ function menu(items, title, start)
 			elseif eventData[2] == keys.enter then
 				clear()
 				return items[selected]
-			elseif eventData[2] == keys.left and page > 1 then
-				page = page - 1
-				if selected - drawSize < 1 then
-					selected = 1
-				else
-					selected = selected - drawSize
+			elseif eventData[2] == keys.left then
+				changePage(-1)
+			elseif eventData[2] == keys.right then
+				changePage(1)
+			end
+		elseif eventData[1] == 'mouse_click' then
+			if eventData[4] > 5 then
+				clear()
+				selected = (eventData[4]-6+((page-1)*drawSize))+1
+				return items[selected]
+			elseif eventData[4] == 5 then
+				if eventData[3] == 1 or eventData[3] == 2 then
+					changePage(-1)
+				elseif eventData[3] == pages:len()-1 or eventData[3] == pages:len()-2 then
+					changePage(1)
 				end
-			elseif eventData[2] == keys.right and page < maxPages() then
-				page = page + 1
-				if selected + drawSize > #items then
-					selected = #items
-				else
-					selected = selected + drawSize
-				end
+			end
+		elseif eventData[1] == 'mouse_scroll' then
+			if eventData[2] == 1 then
+				changePage(1)
+			elseif eventData[2] == -1 then
+				changePage(-1)
 			end
 		end
 		sleep(0)
@@ -167,6 +204,7 @@ function yesno(text, title, start)
 	if start ~= nil and type(start) == "boolean" then
 		selected = start
 	end
+	local w, h = term.getSize()
 	while true do
 		redraw()
 		local eventData = {os.pullEventRaw()}
@@ -179,6 +217,16 @@ function yesno(text, title, start)
 			elseif eventData[2] == keys.enter then
 				clear()
 				return selected
+			end
+		elseif eventData[1] == 'mouse_click' then
+			if eventData[4] == h-1 then
+				if eventData[3] >= math.floor(w/2)+1 and eventData[3] <= w-1 then
+					clear()
+					return false
+				elseif eventData[3] >= 2 and eventData[3] <= math.floor(w/2)-1 then
+					clear()
+					return true
+				end
 			end
 		end
 		sleep(0)
