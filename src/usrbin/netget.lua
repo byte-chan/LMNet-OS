@@ -36,6 +36,19 @@ while running do
 					file.write(data["content"])
 					file.close()
 					printLog("Saved as "..data["name"])
+				elseif data['mode'] == "netfileDIR" then
+					local allNames = textutils.unserialize(data['name'])
+					local allCode = textutils.unserialize(data['content'])
+					if #allNames ~= #allCode then
+						printError("Unknown error.")
+						return
+					end
+					for i=1,#allNames then
+						local file = fs.open(allNames[i],"w")
+						file.write(allCode[i])
+						file.close()
+						printLog('File '..i..' saved as '..allNames[i])
+					end
 				end
 			end
 		end
