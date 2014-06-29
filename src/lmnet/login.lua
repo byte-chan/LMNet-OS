@@ -136,7 +136,7 @@ local function redraw()
 	clear()
 	bgSet(colors.gray)
 	term.clearLine()
-	cprint("LMNet OS: Login")
+	cprint((os.version())..": Login")
 	bgSet(colors.black)
 	print("Select user with arrow keys.")
 	print("Press enter to select.")
@@ -168,7 +168,6 @@ local tArgs = {...}
 
 if config.read(nil, "autoLogin") and tArgs[1] ~= "--switch" then
 	currentUser = config.read(nil, "autoLogin")
-	currentUser = users[selected].user
 	os.pullEvent = oldPullEvent
 	if fs.exists(fs.combine(currentUser == "root" and systemDirs.root or fs.combine(systemDirs.users, currentUser), "startup")) then
 		clear()
