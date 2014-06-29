@@ -217,7 +217,7 @@ if config.read(nil, "showCalc") and term.isColor() then
 	shell.openTab("/usr/bin/calc")
 end
 os.version = function()
-	return "LMNet OS 1.1"
+	return config.read(nil, "oem") or "LMNet OS 1.1"
 end
 shell.run(".lmnet/login")
 clear()
