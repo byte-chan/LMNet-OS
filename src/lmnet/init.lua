@@ -219,7 +219,11 @@ end
 os.version = function()
 	return config.read(nil, "oem") or "LMNet OS 1.1"
 end
-shell.run(".lmnet/login")
+shell.setDir("")
+if fs.exists("/.lmnet/oemboot") then
+	shell.run("/.lmnet/oemboot")
+end
+shell.run("/.lmnet/login")
 clear()
 fgSet(colors.yellow)
 print(os.version())
