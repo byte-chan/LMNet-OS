@@ -3,6 +3,11 @@ if not fs then
 	return
 end
 
+if currentUser and currentUser ~= "root" then
+	printError("userctl: Permission denied")
+	return
+end
+
 -- load .lmnet/users.db
 local file = fs.open("/.lmnet/users.db", "r")
 local users = textutils.unserialize(file.readAll())
