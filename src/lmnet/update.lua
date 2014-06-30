@@ -139,7 +139,7 @@ local files = {
 	["src/apis/git.lua"] = ".lmnet/apis/git",
 	["src/apis/packet.lua"] = ".lmnet/apis/packet",
 	["src/apis/ui.lua"] = ".lmnet/apis/ui",
-	["src/apis/json.lua"] = ".lmnet/api/json",
+	["src/apis/json.lua"] = ".lmnet/apis/json",
 }
 local fileCount = 0
 for _ in pairs(files) do
