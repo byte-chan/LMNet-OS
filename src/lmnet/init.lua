@@ -174,11 +174,39 @@ if not fs.exists("/.lmnet/sys.conf") then
 		os.shutdown()
 	end
 	clear()
-	write("Host name: ")
+	local preName = os.getComputerLabel()
+	if preName then
+		write("Host name: "..preName)
+		term.setCursorPos(1,2)
+		write("Press E to edit, press enter to contine")
+		local ev = {os.pullEventRaw()}
+		if ev[1] == 'key' then
+			if ev[2] == keys.e then
+				term.setCursorPos(12,1)
+				local setName = read(nil,{preName})
+			elseif ev[2] == keys.enter then
+				local setName = preName	
+			end
+		elseif ev[1] == 'terminate' then
+			local setName = preName 
+		end
+	else
+		write("Host name: ")
+		local setName = read()
+	end
+	os.setComputerLabel(setName)
 	local file = fs.open("/.lmnet/sys.conf", "w")
-	file.writeLine("hostname=\""..read().."\"")
+	file.writeLine("hostname=\""..setName.."\"")
 	file.writeLine("debug=false")
-	file.writeLine("showCalc=true")
+	print("Open calc tab?")
+	write("[Yn]")
+	local input = read():lower()
+	if input == 'y' or input == '' then
+		local calc = true	
+	else
+		local calc = false
+	end
+	file.writeLine("showCalc="..tostring(calc))
 	file.close()
 	print("Press any key to continue")
 	while true do
