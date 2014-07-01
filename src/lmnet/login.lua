@@ -177,74 +177,108 @@ if config.read(nil, "autoLogin") and tArgs[1] ~= "--switch" then
 	end
 end
 
-while currentUser == "login" do
-	redraw()
-	local eventData = {os.pullEventRaw()}
-	if eventData[1] == "terminate" then
-		clear()
-		print("Termination is not allowed.")
-		sleep(2)
-	elseif eventData[1] == "key" then
-		if eventData[2] == keys.up and selected > 1 then
-			selected = selected - 1
-			if selected-(page-1)*10 < 1 then
-				page = page - 1
+if config.read(nil, "classicLogin") then
+	while currentUser == "login" do
+		write(config.read(nil, "hostname").. "login: ")
+		local inputUser = read()
+		local success = false
+		for _, v in pairs(users) do
+			if v.user == inputUser then
+				if v.pass ~= "" and v.pass ~= nil then
+					write("Password for "..inputUser..": ")
+					local inputPass = read()
+					if inputPass == v.pass then
+						success = true
+						break
+					else
+						print("Incorrect password")
+					end
+				else
+					success = true
+				end
 			end
-		elseif eventData[2] == keys.down and selected < #users then
-			selected = selected + 1
-			if selected-(page-1)*10 > 10 then
-				page = page + 1
-			end
-		elseif eventData[2] == keys.enter then
-			if users[selected].pass ~= "" then
+		end
+		if success then
+			currentUser = users[selected].user
+			os.pullEvent = oldPullEvent
+			if fs.exists(fs.combine(currentUser == "root" and systemDirs.root or fs.combine(systemDirs.users, currentUser), "startup")) then
 				clear()
-				write("Password for "..users[selected].user..": ")
-				local input = read("*")
-				if users[selected].pass ~= input then
-					print("Wrong password.")
-					sleep(1.5)
+				shell.run(fs.combine("\""..currentUser == "root" and systemDirs.root or fs.combine(systemDirs.users, currentUser), "startup").."\"")
+				print("Press any key to continue")
+				os.pullEvent("key")
+			end
+		end
+	end
+else
+	while currentUser == "login" do
+		redraw()
+		local eventData = {os.pullEventRaw()}
+		if eventData[1] == "terminate" then
+			clear()
+			print("Termination is not allowed.")
+			sleep(2)
+		elseif eventData[1] == "key" then
+			if eventData[2] == keys.up and selected > 1 then
+				selected = selected - 1
+				if selected-(page-1)*10 < 1 then
+					page = page - 1
+				end
+			elseif eventData[2] == keys.down and selected < #users then
+				selected = selected + 1
+				if selected-(page-1)*10 > 10 then
+					page = page + 1
+				end
+			elseif eventData[2] == keys.enter then
+				if users[selected].pass ~= "" then
+					clear()
+					write("Password for "..users[selected].user..": ")
+					local input = read("*")
+					if users[selected].pass ~= input then
+						print("Wrong password.")
+						sleep(1.5)
+					else
+						currentUser = users[selected].user
+						os.pullEvent = oldPullEvent
+						if fs.exists(fs.combine(currentUser == "root" and systemDirs.root or fs.combine(systemDirs.users, currentUser), "startup")) then
+							clear()
+							shell.run(fs.combine("\""..currentUser == "root" and systemDirs.root or fs.combine(systemDirs.users, currentUser), "startup").."\"")
+							print("Press any key to continue")
+							os.pullEvent("key")
+						end
+					end
 				else
 					currentUser = users[selected].user
 					os.pullEvent = oldPullEvent
 					if fs.exists(fs.combine(currentUser == "root" and systemDirs.root or fs.combine(systemDirs.users, currentUser), "startup")) then
 						clear()
-						shell.run(fs.combine("\""..currentUser == "root" and systemDirs.root or fs.combine(systemDirs.users, currentUser), "startup").."\"")
+						shell.run("\""..fs.combine(currentUser == "root" and systemDirs.root or fs.combine(systemDirs.users, currentUser), "startup").."\"")
 						print("Press any key to continue")
 						os.pullEvent("key")
 					end
 				end
-			else
-				currentUser = users[selected].user
-				os.pullEvent = oldPullEvent
-				if fs.exists(fs.combine(currentUser == "root" and systemDirs.root or fs.combine(systemDirs.users, currentUser), "startup")) then
-					clear()
-					shell.run("\""..fs.combine(currentUser == "root" and systemDirs.root or fs.combine(systemDirs.users, currentUser), "startup").."\"")
-					print("Press any key to continue")
-					os.pullEvent("key")
+			elseif eventData[2] == keys.left and page > 1 then
+				page = page - 1
+				if selected - 10 < 1 then
+					selected = 1
+				else
+					selected = selected - 10
 				end
+			elseif eventData[2] == keys.right and page < maxPages() then
+				page = page + 1
+				if selected + 10 > #users then
+					selected = #users
+				else
+					selected = selected + 10
+				end
+			elseif eventData[2] == keys.q then
+				clear()
+				shell.run("/rom/programs/shutdown")
 			end
-		elseif eventData[2] == keys.left and page > 1 then
-			page = page - 1
-			if selected - 10 < 1 then
-				selected = 1
-			else
-				selected = selected - 10
-			end
-		elseif eventData[2] == keys.right and page < maxPages() then
-			page = page + 1
-			if selected + 10 > #users then
-				selected = #users
-			else
-				selected = selected + 10
-			end
-		elseif eventData[2] == keys.q then
-			clear()
-			shell.run("/rom/programs/shutdown")
 		end
+		sleep(0)
 	end
-	sleep(0)
+	clear()
 end
-clear()
 if currentUser == "login" then
 	os.reboot()
 end
