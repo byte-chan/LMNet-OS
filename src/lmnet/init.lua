@@ -201,10 +201,11 @@ if not fs.exists("/.lmnet/sys.conf") then
 	print("Open calc tab?")
 	write("[Yn]")
 	local input = read():lower()
+	local calc
 	if input == 'y' or input == '' then
-		local calc = true	
+		calc = true	
 	else
-		local calc = false
+		calc = false
 	end
 	file.writeLine("showCalc="..tostring(calc))
 	file.close()
