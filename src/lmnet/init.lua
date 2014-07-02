@@ -253,6 +253,9 @@ if fs.exists("/.lmnet/oemboot") then
 	shell.run("/.lmnet/oemboot")
 end
 shell.run("/.lmnet/login")
+if fs.exists("/.lmnet/oemstart") then
+	shell.run("/.lmnet/oemstart")	
+end
 clear()
 fgSet(colors.yellow)
 print(os.version())
