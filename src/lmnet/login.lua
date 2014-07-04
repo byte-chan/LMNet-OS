@@ -178,8 +178,12 @@ if config.read(nil, "autoLogin") and tArgs[1] ~= "--switch" then
 end
 
 if config.read(nil, "classicLogin") then
+	clear()
 	while currentUser == "login" do
-		write(config.read(nil, "hostname").. "login: ")
+		print("")
+		print(os.version())
+		print("")
+		write(config.read(nil, "hostname").. " login: ")
 		local inputUser = read()
 		local success = false
 		for _, v in pairs(users) do
