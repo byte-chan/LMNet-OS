@@ -256,7 +256,9 @@ shell.run("/.lmnet/login")
 if fs.exists("/.lmnet/oemstart") then
 	shell.run("/.lmnet/oemstart")	
 end
-clear()
+if not config.read(nil, "classicLogin") then
+	clear()
+end
 fgSet(colors.yellow)
 print(os.version())
 fgSet(colors.white)
