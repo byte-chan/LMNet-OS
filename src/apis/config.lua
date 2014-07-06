@@ -49,8 +49,8 @@ function write(cfgfile, cfg, value)
 		error(path.." is a directory", 0)
 	end
 	local readfile = fs.open(path, "r")
+	local readlines = {}
 	if readfile then
-		local readlines = {}
 		local readline = ""
 		while readline ~= nil do
 			readline = readfile.readLine()
