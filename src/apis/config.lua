@@ -45,6 +45,9 @@ function write(cfgfile, cfg, value)
 	else
 		path = cfgfile
 	end
+	if fs.exists(path) and fs.isDir(path) then
+		error(path.." is a directory", 0)
+	end
 	local readfile = fs.open(path, "r")
 	if readfile then
 		local readlines = {}
@@ -58,17 +61,19 @@ function write(cfgfile, cfg, value)
 		readfile.close()
 	end
 	local config = {}
-	for _, v in pairs(readlines) do
-		local tmp
-		local tmp2 = ""
-		for match in string.gmatch(v, "[^\=]+") do
-			if tmp then
-				tmp2 = tmp2..match
-			else
-				tmp = match
+	if fs.exists(path) and not fs.isDir(path) then
+		for _, v in pairs(readlines) do
+			local tmp
+			local tmp2 = ""
+			for match in string.gmatch(v, "[^\=]+") do
+				if tmp then
+					tmp2 = tmp2..match
+				else
+					tmp = match
+				end
 			end
+			config[tmp] = textutils.unserialize(tostring(tmp2))
 		end
-		config[tmp] = textutils.unserialize(tostring(tmp2))
 	end
 	local writefile = fs.open(path, "w")
 	config[cfg] = value
