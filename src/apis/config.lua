@@ -46,18 +46,17 @@ function write(cfgfile, cfg, value)
 		path = cfgfile
 	end
 	local readfile = fs.open(path, "r")
-	if not readfile then
-		return nil
-	end
-	local readlines = {}
-	local readline = ""
-	while readline ~= nil do
-		readline = readfile.readLine()
-		if readline then
-			table.insert(readlines, readline)
+	if readfile then
+		local readlines = {}
+		local readline = ""
+		while readline ~= nil do
+			readline = readfile.readLine()
+			if readline then
+				table.insert(readlines, readline)
+			end
 		end
+		readfile.close()
 	end
-	readfile.close()
 	local config = {}
 	for _, v in pairs(readlines) do
 		local tmp
