@@ -1,15 +1,8 @@
 local function request(pURL)
 	if type(pURL) == 'table' then
-		local x = ''
-		for i=1,#pURL do
-			x = x..pURL[i]..'/'
-		end
-		pURL = x
+		pURL = table.concat(pURL, "/")
 	end
 	local URL = textutils.urlEncode('https://api.github.com/'..pURL)
-	if URL:sub(URL:len(),URL:len()) == "/" then
-		URL = URL:sub(1,URL:len()-1)
-	end
 	local res = http.get(URL)
 	if res then
 		return json.decode(res.readAll())
