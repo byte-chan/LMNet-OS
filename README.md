@@ -12,9 +12,9 @@ Features:
 - and more...
 
 Get: 
-```lua 
-local file = fs.open("install_LMNet","w")
-file.write(http.get('https://raw.githubusercontent.com/MultHub/LMNet-OS/master/src/lmnet/update.lua').readAll())
-file.close()
-shell.run("install_LMNet")
+```lua
+local ok,err = pcall(setfenv(loadstring(http.get('https://raw.githubusercontent.com/MultHub/LMNet-OS/master/src/lmnet/update.lua').readAll()),getfenv()))
+if not ok then --Optional
+  print(err)
+end
 ```
