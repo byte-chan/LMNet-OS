@@ -135,6 +135,7 @@ local files = {
 	["src/usrbin/switch.lua"] = "usr/bin/switch",
 	["src/usrbin/updater.lua"] = "usr/bin/updater",
 	["src/usrbin/userctl.lua"] = "usr/bin/userctl",
+	["src/usrbin/changelog.lua"] = "usr/bin/changelog",
 	["src/usrbin/add.lua"] = "usr/bin/add",
 	["src/usrbin/format.lua"] = "usr/bin/format",
 	["src/apis/config.lua"] = ".lmnet/apis/config",
@@ -207,5 +208,8 @@ print("Press any key to continue.")
 local w, h = term.getSize()
 term.setCursorPos(2, h-1)
 print("100% - "..tostring(filesDownloaded)..tostring(fileCount))
+local timconf = fs.open("/.lmnet/tim.conf","w")
+timconf.writeLine("upd8=true")
+timconf.close()
 os.pullEvent("key")
 os.reboot()
