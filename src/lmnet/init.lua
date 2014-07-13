@@ -253,7 +253,7 @@ if config.read(nil, "showCalc") and term.isColor() then
 elseif config.read("/.lmnet/tim.conf", "upd8") then
 	shell.run("/usr/bin/changelog")
 	local x = config.list()
-	x['upd8'] = nil
+	x['upd8'] = false
 	for i,v in pairs(x) do
 		config.write("/.lmnet/tim.conf",i,v)
 	end
