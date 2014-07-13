@@ -22,7 +22,7 @@ local function getRepoAsFile(owner,repo)
 		if v['type'] == 'file' then
 
 		elseif v['type'] == 'dir' then
-			getDir(owner,repo,)
+			getDir(owner,repo)
 		end
 	end
 end
