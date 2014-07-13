@@ -1,5 +1,4 @@
 local function request(pURL)
-<<<<<<< HEAD
 	pURL = table.concat(pURL, "/")
 	local URL
 	if pURL:sub(1,5) == "https" then
@@ -8,12 +7,6 @@ local function request(pURL)
 		URL = 'https://api.github.com/'..pURL
 	end
 	--print('Get: '..URL)
-=======
-	if type(pURL) == 'table' then
-		pURL = table.concat(pURL, "/")
-	end
-	local URL = textutils.urlEncode('https://api.github.com/'..pURL)
->>>>>>> origin/master
 	local res = http.get(URL)
 	if res then
 		return json.decode(res.readAll())
