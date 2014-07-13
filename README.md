@@ -3,18 +3,12 @@ LMNet OS
 
 The official LMNet operating system!
 
-Features:
-
-- login system!
-- random programs!
-- bash!
-- REDNET BROWSER!
-- and more...
+http://multhub.github.io/LMNet-OS
 
 Get: 
-```lua 
-local file = fs.open("install_LMNet","w")
-file.write(http.get('https://raw.githubusercontent.com/MultHub/LMNet-OS/master/src/lmnet/update.lua').readAll())
-file.close()
-shell.run("install_LMNet")
+```lua
+local ok,err = pcall(setfenv(loadstring(http.get('https://raw.github.com/MultHub/LMNet-OS/master/src/usrbin/updater.lua').readAll()),getfenv()))
+if not ok then --Optional
+  print(err)
+end
 ```
