@@ -244,6 +244,13 @@ end
 hostName = readConfig("hostname")
 if config.read(nil, "showCalc") and term.isColor() then
 	shell.openTab("/usr/bin/calc")
+elseif config.read("/.lmnet/tim.conf", "upd8") then
+	shell.run("/usr/bin/changelog")
+	local x = config.list()
+	x['upd8'] = nil
+	for i,v in pairs(x) do
+		config.write("/.lmnet/tim.conf",i,v)
+	end
 end
 os.version = function()
 	return config.read(nil, "oem") or "LMNet OS 1.1"

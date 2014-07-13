@@ -135,6 +135,7 @@ local files = {
 	["src/usrbin/switch.lua"] = "usr/bin/switch",
 	["src/usrbin/updater.lua"] = "usr/bin/updater",
 	["src/usrbin/userctl.lua"] = "usr/bin/userctl",
+	["src/usrbin/changelog.lua"] = "usr/bin/changelog",
 	["src/usrbin/add.lua"] = "usr/bin/add",
 	["src/usrbin/format.lua"] = "usr/bin/format",
 	["src/apis/config.lua"] = ".lmnet/apis/config",
@@ -200,6 +201,9 @@ if fs.exists("startup") and not fs.isDir("startup") then
 		end
 	end
 end
+local config = fs.open("/.lmnet/tim.conf","a")
+config.writeLine("upd8=true")
+config.close()
 print("Press any key to continue")
 os.pullEvent("key")
 os.reboot()
