@@ -190,7 +190,7 @@ if config.read(nil, "classicLogin") then
 			if v.user == inputUser then
 				if v.pass ~= "" and v.pass ~= nil then
 					write("Password for "..inputUser..": ")
-					local inputPass = read("")
+					local inputPass = read("*")
 					if inputPass == v.pass then
 						success = true
 						break
