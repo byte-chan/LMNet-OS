@@ -170,9 +170,8 @@ for k, v in pairs(files) do
 	end
 	filesDownloaded = filesDownloaded + 1
 end
-term.setTextColor(colors.white)
-term.setBackgroundColor(colors.black)
 clear()
+term.setCursorPos(2, 2)
 print("Creating missing directories...")
 local dirs = {
 	"root",
@@ -185,7 +184,9 @@ for _, v in pairs(dirs) do
 		fs.makeDir(v)
 	end
 end
-if fs.exists("startup") and not fs.isDir("startup") then
+if not fs.exists("startup") then
+	fs.copy("lmnet", "startup")
+elseif fs.exists("startup") and not fs.isDir("startup") then
 	local oldSu = fs.open("startup", "r")
 	local oSu = oldSu.readAll()
 	oldSu.close()
@@ -200,6 +201,11 @@ if fs.exists("startup") and not fs.isDir("startup") then
 		end
 	end
 end
-print("Press any key to continue")
+clear()
+term.setCursorPos(2, 2)
+print("Press any key to continue.")
+local w, h = term.getSize()
+term.setCursorPos(2, h-1)
+print("100% - "..tostring(filesDownloaded)..tostring(fileCount))
 os.pullEvent("key")
 os.reboot()
