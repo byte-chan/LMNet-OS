@@ -1,4 +1,4 @@
-tArgs = { ... }
+local tArgs = {...}
 
 if #tArgs < 1 then
 	printError("format <path>")
@@ -7,23 +7,26 @@ end
 
 local path = shell.resolve(tArgs[1])
 if not fs.exists(path) then
-	printError("Path didn\'t exists")
+	printError(path..": not found")
 	return
 end
 
 local list = fs.list(path)
-term.clear()
-term.setCursorPos(1,1)
-print("Really delete all files in "..path.." ?")
-print("[yN]")
-local input = read():lower()
-if input == 'y' then
-	for i=1,#list do
-		fs.delete(path..list[i])
-		print("Delete: "..list[i])
+clear()
+local format = ui.yesno("Really delete all files in "..path.."?\nTHIS CANNOT BE UNDONE!\n(unless you have backups)", "format", false)
+if format then
+	for i = 1, #list do
+		local ok, err = pcall(fs.delete, fs.combine(path, list[i]))
+		if ok then
+			print("Deleted: "..list[i])
+		else
+			printError("Error deleting file "..list[i]..":")
+			printError(err)
+		end
 	end
-	print(path.."is empty")
+	print(path..": format successful.")
+	return 0
 else
-	print("exit...")
-	return
+	print("Aborting.")
+	return 1
 end
