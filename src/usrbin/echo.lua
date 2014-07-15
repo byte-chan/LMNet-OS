@@ -1,2 +1,1 @@
-local tArgs = {...}
-print(table.concat(tArgs, " "))
+print(table.concat({...}," "))
