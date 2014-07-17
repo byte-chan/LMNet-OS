@@ -1,4 +1,4 @@
-LMNet-OS
+LMNet OS
 ========
 
-WIP ComputerCraft OS.
+The extra branch.
