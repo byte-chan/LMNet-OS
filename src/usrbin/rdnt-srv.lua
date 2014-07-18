@@ -10,7 +10,7 @@ local input = string.lower(read())
 if input ~= "y" then
 	return
 end
-local urlOK = false
+local urlOK = fs.exists(".lmnet/rdnt-srv.conf")
 while not urlOK do
 	clear()
 	print("rdnt-srv")
