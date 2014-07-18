@@ -29,7 +29,9 @@ while not urlOK do
 		status = "The URL '"..input.."'is already in use."
 	else
 		urlOK = true
-		url = input
+		local file = fs.open(".lmnet/rdnt-srv.conf", "w")
+		file.write("url=\""..input.."\"")
+		file.close()
 	end
 end
 
