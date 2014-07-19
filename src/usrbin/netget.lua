@@ -43,7 +43,7 @@ while running do
 						printError("Unknown error.")
 						return
 					end
-					for i=1,#allNames then
+					for i=1,#allNames do
 						local file = fs.open(allNames[i],"w")
 						file.write(allCode[i])
 						file.close()
