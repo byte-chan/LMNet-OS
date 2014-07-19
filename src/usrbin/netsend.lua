@@ -17,10 +17,11 @@ if #tArgs < 1 then
 	return
 end
 
+local name
 if tArgs[2] then
-	local name = tArgs[2]
+	name = tArgs[2]
 else
-	local name = tArgs[1]
+	name = tArgs[1]
 end
 
 local filepath = shell.resolve(tArgs[1])
