@@ -138,6 +138,7 @@ local files = {
 	["src/usrbin/changelog.lua"] = "usr/bin/changelog",
 	["src/usrbin/add.lua"] = "usr/bin/add",
 	["src/usrbin/format.lua"] = "usr/bin/format",
+	["src/usrbin/timemachine.lua"] = "usr/bin/timemachine",
 	["src/apis/config.lua"] = ".lmnet/apis/config",
 	["src/apis/git.lua"] = ".lmnet/apis/git",
 	["src/apis/packet.lua"] = ".lmnet/apis/packet",
