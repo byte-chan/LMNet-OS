@@ -239,6 +239,10 @@ if config.read(nil, "debug") then
 	end
 end
 
+function localize(key)
+	return config.read(".lmnet/lang/"..config.read(nil, "lang")..".lang", key) or config.read(".lmnet/lang/en.lang", key) or key
+end
+
 if lmnet_debug then
 	clear()
 	print("LMNet OS debug mode")
