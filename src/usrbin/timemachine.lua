@@ -7,9 +7,12 @@ while true do
       if files[i] ~= "disk" then
        pcall(fs.copy, "/"..files[i], "/disk/"..files[i])
       end
-    end
+  end
+    local file = fs.open("/disk/.trigger", "w")
+    file.write("Time Machine Trigger")
+    file.close()
+    disk.setLabel(side, "TM Backup: "..textutils.formatTime(os.time(), false).." Day: "..os.day())
     print("Time Machine: Completed backup")
-    disk.setLabel(side, "TM Backup: "..textutils.formatTime(os.time(), false).." "..os.day())
     return
   end
 end
