@@ -240,6 +240,9 @@ if config.read(nil, "debug") then
 end
 
 function localize(key)
+	if not config.read(nil, "lang") then
+		config.write(nil, "lang", "en")
+	end
 	return config.read(".lmnet/lang/"..config.read(nil, "lang")..".lang", key) or config.read(".lmnet/lang/en.lang", key) or key
 end
 
