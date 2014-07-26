@@ -279,11 +279,6 @@ end
 if not config.read(nil, "classicLogin") then
 	clear()
 end
-if not fs.exists("/.lmnet/connor.txt") then
-	local file = fs.open("/.lmnet/connor.txt", "w")
-	file.write("Connor Delaney is Epic")
-	file.close()
-end
 file.close()
 fgSet(colors.yellow)
 print(os.version())
