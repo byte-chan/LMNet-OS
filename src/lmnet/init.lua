@@ -279,7 +279,6 @@ end
 if not config.read(nil, "classicLogin") then
 	clear()
 end
-file.close()
 fgSet(colors.yellow)
 print(os.version())
 fgSet(colors.white)
