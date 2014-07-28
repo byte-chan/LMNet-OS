@@ -9,7 +9,7 @@ local mode = 1
 local function follow()
 	local xP,yP = term.getCursorPos()
 	local xL,yL = term.getSize()
-	if xP < xL then
+	if yP < yL then
 		return true
 	else
 		return false
