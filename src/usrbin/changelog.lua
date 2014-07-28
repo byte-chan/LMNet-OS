@@ -6,6 +6,16 @@ ui.cprint('LMNet-OS Changelog (GitHub Commits)')
 local col1,col2,tcol1,tcol2
 local mode = 1
 
+local function follow()
+	local xP,yP = term.getCursorPos()
+	local xL,yL = term.getSize()
+	if xP < xL then
+		return true
+	else
+		return false
+	end
+end
+
 if term.isColor() then
 	col1 = colors.gray
 	col2 = colors.lightGray
@@ -20,7 +30,8 @@ else
 	tcol2 = colors.white
 end
 
-for i=1,5 do
+local i = 1
+while follow() do
 	local usr = input[i]['commit']['author']['name']
 	if usr == 'Tim Ittermann' or usr == 'timia2109' then
 		if timia2109 then
@@ -42,6 +53,7 @@ for i=1,5 do
 		mode = 1
 	end
 	print(':',input[i]['commit']['message'])
+	i = i+1
 end
 term.setCursorPos(1,yLen)
 term.clearLine()
