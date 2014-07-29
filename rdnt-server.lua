@@ -39,7 +39,7 @@ end
 if not fs.exists(".lmnet/rdnt-srv.conf") or not config.read(".lmnet/rdnt-srv.conf", "url") then
 	write("URL: ")
 	local input = read()
-	config.write(".lmnet/rdnt-srv.conf", input)
+	config.write(".lmnet/rdnt-srv.conf", "url", input)
 end
 
 local url = config.read(".lmnet/rdnt-srv.conf", "url")
