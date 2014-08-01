@@ -17,7 +17,7 @@ local function genFile()
 	end
 end
 
-if tArgs < 2 then
+if #tArgs < 2 then
 	printUsage()
 	return
 end
