@@ -207,7 +207,7 @@ if config.read(nil, "classicLogin") then
 			os.pullEvent = oldPullEvent
 			if fs.exists(fs.combine(currentUser == "root" and systemDirs.root or fs.combine(systemDirs.users, currentUser), "startup")) then
 				clear()
-				shell.run(fs.combine("\""..currentUser == "root" and systemDirs.root or fs.combine(systemDirs.users, currentUser), "startup").."\"")
+				shell.run("\""..fs.combine(currentUser == "root" and systemDirs.root or fs.combine(systemDirs.users, currentUser), "startup").."\"")
 				print("Press any key to continue")
 				os.pullEvent("key")
 			end
@@ -245,7 +245,7 @@ else
 						os.pullEvent = oldPullEvent
 						if fs.exists(fs.combine(currentUser == "root" and systemDirs.root or fs.combine(systemDirs.users, currentUser), "startup")) then
 							clear()
-							shell.run(fs.combine("\""..currentUser == "root" and systemDirs.root or fs.combine(systemDirs.users, currentUser), "startup").."\"")
+							shell.run("\""..fs.combine(currentUser == "root" and systemDirs.root or fs.combine(systemDirs.users, currentUser), "startup").."\"")
 							print("Press any key to continue")
 							os.pullEvent("key")
 						end
