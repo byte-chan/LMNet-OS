@@ -1,10 +1,25 @@
-local input = git.getCommits('MultHub','LMNet-OS')
+local tArgs = { ... }
+
+local user,repo
+if #tArgs == 2 then
+	user = tArgs[1]
+	repo = tArgs[2]
+else
+	user = 'MultHub'
+	repo = 'LMNet-OS'
+end
+
+local input = git.getCommits(user,repo)
 local xLen,yLen = term.getSize()
 term.clear()
 term.setCursorPos(1,1)
-ui.cprint('LMNet-OS Changelog (GitHub Commits)')
+ui.cprint('GitHub Commits for '..tArgs[2])
 local col1,col2,tcol1,tcol2
 local mode = 1
+
+local editorColors = {}
+editorColors.Multi = colors.yellow
+editorColors["Tim Ittermann"] = colors.blue
 
 local function follow()
 	local xP,yP = term.getCursorPos()
@@ -21,8 +36,6 @@ if term.isColor() then
 	col2 = colors.lightGray
 	tcol1 = colors.white
 	tcol2 = colors.black
-	multi = colors.yellow
-	timia2109 = colors.blue
 else
 	col1 = colors.white
 	col2 = colors.black
@@ -33,14 +46,8 @@ end
 local i = 1
 while follow() do
 	local usr = input[i]['commit']['author']['name']
-	if usr == 'Tim Ittermann' or usr == 'timia2109' then
-		if timia2109 then
-			term.setTextColor(timia2109)
-		end
-	elseif usr == 'Multi' then
-		if multi then
-			term.setTextColor(multi)
-		end
+	if editorColors[usr] and term.isColor() then
+		term.setTextColor(editorColors[usr])
 	end
 	write(usr)
 	if mode == 1 then
