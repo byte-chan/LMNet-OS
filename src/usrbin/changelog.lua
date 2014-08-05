@@ -13,7 +13,7 @@ local input = git.getCommits(user,repo)
 local xLen,yLen = term.getSize()
 term.clear()
 term.setCursorPos(1,1)
-ui.cprint('GitHub Commits for '..tArgs[2])
+ui.cprint('GitHub Commits for '..repo)
 local col1,col2,tcol1,tcol2
 local mode = 1
 
