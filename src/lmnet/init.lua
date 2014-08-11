@@ -282,5 +282,7 @@ end
 fgSet(colors.yellow)
 print(os.version())
 fgSet(colors.white)
+shell.setAlias('fs','/usr/bin/fileman')
+shell.setAlias('ls+','/usr/bin/fileman')
 shell.run("/usr/bin/bash", "--init")
 shell.run("/rom/programs/shutdown")
