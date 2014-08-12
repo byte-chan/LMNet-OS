@@ -8,6 +8,8 @@ end
 
 -- load system API
 function bsodError(msg)
+	local oldTerm = term.current()
+	term.redirect(term.native())
 	term.setBackgroundColor(colors.black)
 	if term.isColor() then
 		term.setBackgroundColor(colors.blue)
@@ -46,8 +48,13 @@ function bsodError(msg)
 	term.redirect(win)
 	print(msg)
 	term.redirect(parentTerm)
-	cprint("Press any key to continue", termValues.y - 2)
+	cprint("Press any key to continue", termValues.h - 2)
 	os.pullEvent("key")
+	term.setTextColor(colors.white)
+	term.setBackgroundColor(colors.black)
+	term.clear()
+	term.setCursorPos(1, 1)
+	term.redirect(oldTerm)
 end
 local _ok, _err = pcall(function()
 function clear()
