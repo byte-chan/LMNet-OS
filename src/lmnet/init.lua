@@ -7,6 +7,49 @@ if not fs or not term or not shell then
 end
 
 -- load system API
+function bsodError(msg)
+	term.setBackgroundColor(colors.black)
+	if term.isColor() then
+		term.setBackgroundColor(colors.blue)
+	end
+	term.setTextColor(colors.white)
+	term.clear()
+	local termValues = {}
+	setmetatable(termValues, {__index = function(self, k)
+		local x, y = term.getCursorPos()
+		local w, h = term.getSize()
+		local cx, cy = math.ceil(w/2), math.ceil(h/2)
+		local rtn = {x=x,y=y,w=w,h=h,cx=cx,cy=cy}
+		return rtn[k]
+	end})
+	local function cprint(text, ln)
+		term.setCursorPos(termValues.cx-math.floor(text:len()/2), ln)
+		print(text)
+	end
+	term.setBackgroundColor(colors.white)
+	term.setTextColor(colors.black)
+	if term.isColor() then
+		term.setTextColor(colors.blue)
+	end
+	cprint(" LMNet OS ", 3)
+	term.setBackgroundColor(colors.black)
+	if term.isColor() then
+		term.setBackgroundColor(colors.blue)
+	end
+	term.setTextColor(colors.white)
+	local win = window.create(term.current(), 3, 5, termValues.w - 2, termValues.h - 4, true)
+	win.setTextColor(colors.white)
+	win.setBackgroundColor(term.isColor() and colors.blue or colors.black)
+	win.clear()
+	win.setCursorPos(1, 1)
+	local parentTerm = term.current()
+	term.redirect(win)
+	print(msg)
+	term.redirect(parentTerm)
+	cprint("Press any key to continue", termValues.y - 2)
+	os.pullEvent("key")
+end
+local _ok, _err = pcall(function()
 function clear()
 	term.clear()
 	term.setCursorPos(1, 1)
@@ -285,4 +328,10 @@ fgSet(colors.white)
 shell.setAlias('fs','/usr/bin/fileman')
 shell.setAlias('ls+','/usr/bin/fileman')
 shell.run("/usr/bin/bash", "--init")
+end)
+if not _ok then
+	if _err then
+		bsodError("System crash:\n\n".._err)
+	else
+		bsodError("System crash:\n\n<unknown source>")
 shell.run("/rom/programs/shutdown")
