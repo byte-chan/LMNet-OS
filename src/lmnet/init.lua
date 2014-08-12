@@ -334,4 +334,6 @@ if not _ok then
 		bsodError("System crash:\n\n".._err)
 	else
 		bsodError("System crash:\n\n<unknown source>")
+	end
+end
 shell.run("/rom/programs/shutdown")
