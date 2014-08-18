@@ -45,6 +45,15 @@ end
 
 local i = 1
 while follow() do
+	local editFiles = 'Edit: '
+	if input[i]['files'] > 1 do
+		for j=1,#input[i]['files'] do
+			editFiles = editFiles..', '..input[i]['files'][j]['filename']	
+		end
+	else
+		editFiles = editFiles..input[i]['files'][1]['filename']	
+	end
+	
 	local usr = input[i]['commit']['author']['name']
 	if editorColors[usr] and term.isColor() then
 		term.setTextColor(editorColors[usr])
@@ -59,7 +68,7 @@ while follow() do
 		term.setBackgroundColor(col2)
 		mode = 1
 	end
-	print(':',input[i]['commit']['message'])
+	print(':'..editFile.."\n",input[i]['commit']['message'])
 	i = i+1
 end
 term.setCursorPos(1,yLen)
