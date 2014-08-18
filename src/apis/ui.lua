@@ -232,3 +232,91 @@ function yesno(text, title, start)
 		sleep(0)
 	end
 end
+
+function button(pLabel,pX,pY,pCol)
+	local rtn = {}
+	local rtn_m = {}
+	rtn_m.__index = rtn_m
+	rtn.label = pLabel
+	rtn.xStart = pX
+	rtn.xEnd = pX+pLabel:len()+2
+	rtn.y = pY
+	rtn.color = pCol
+	rtn.textColor = colors.white
+	rtn.onClick = nil
+	rtn.autoExec = false
+	
+	setmetatable(rtn,rtn_m)
+
+	function rtn_m:draw()
+		paintutils.drawLine(self.xStart,self.y,self.xEnd,self.y,self.color)
+		term.setCursorPos(self.xStart+1,self.y)
+		term.setTextColor(self.textColor)
+		write(self.label)
+	end
+
+	function rtn_m:setNewLabel(pLabel)
+		local oLabel = self.label
+		self.label = pLabel
+		self.xEnd = self.xStart+self.label:len()+2 
+	end
+	
+	function rtn_m:isClicked(pX,pY)
+		if pY == self.y and pX >= self.xStart and pX <= self.xEnd then
+			if self.autoExec and self.onClick then
+				self.action()
+			end
+			return true
+		else
+			return false
+		end 
+	end
+	
+	function rtn_m:exec()
+		if self.onClick then
+			self.onClick()
+		end
+	end
+	
+	return rtn
+end
+
+function clickedButtons(pX,pY, ... )
+	local x = { ... }
+	for i,v in pairs(x) do
+		if v:isClicked(pX,pY) then
+			v:exec()
+			return v.label
+		end
+	end
+	return false
+end
+
+function progressBar(pX,pY,pLen,pCol,pTxt)
+	local rtn = {}
+	local rtn_m = {}
+	rtn_m.__index = rtn_m
+
+	rtn.x = pX
+	rtn.y = pY
+	rtn.len = pLen
+	rtn.color = pCol
+	rtn.textColor = colors.white
+	rtn.showText = pTxt
+	rtn.percent = 0
+
+	setmetatable(rtn,rtn_m)
+
+	function rtn_m:draw()
+		term.setCursorPos(self.x,self.y)
+		term.clearLine()
+		local leng = math.floor((self.percent/100)*self.len)
+		paintutils.drawLine(self.x,self.y,leng,self.y,self.color)
+		term.setTextColor(self.textColor)
+		term.setCursorPos((self.len/2)-1,self.y)
+		term.setBackgroundColor(colors.black)
+		write(tostring(self.percent)..' %')
+	end
+
+	return rtn
+end
