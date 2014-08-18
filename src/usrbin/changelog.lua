@@ -24,7 +24,7 @@ editorColors["Tim Ittermann"] = colors.blue
 local function follow()
 	local xP,yP = term.getCursorPos()
 	local xL,yL = term.getSize()
-	if yP < yL then
+	if yP+1 < yL then
 		return true
 	else
 		return false
@@ -46,12 +46,13 @@ end
 local i = 1
 while follow() do
 	local editFiles = 'Edit: '
-	if input[i]['files'] > 1 do
-		for j=1,#input[i]['files'] do
-			editFiles = editFiles..', '..input[i]['files'][j]['filename']	
+	local mNfo = git.getSingleCommit(user,repo,input[i]['sha'])
+	if #mNfo['files'] > 1 then
+		for j=1,#mNfo['files'] do
+			editFiles = editFiles..', '..mNfo['files'][j]['filename']	
 		end
 	else
-		editFiles = editFiles..input[i]['files'][1]['filename']	
+		editFiles = editFiles..mNfo['files'][1]['filename']	
 	end
 	
 	local usr = input[i]['commit']['author']['name']
@@ -68,7 +69,7 @@ while follow() do
 		term.setBackgroundColor(col2)
 		mode = 1
 	end
-	print(':'..editFile.."\n",input[i]['commit']['message'])
+	print(':'..editFiles.."\n",input[i]['commit']['message'])
 	i = i+1
 end
 term.setCursorPos(1,yLen)

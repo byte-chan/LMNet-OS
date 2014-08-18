@@ -31,6 +31,10 @@ function getCommits(owner,repo)
 	return request({'repos',owner,repo,'commits'})
 end
 
+function getSingleCommit(owner,repo,sha)
+	return request({'repos',owner,repo,'commits',sha})
+end
+
 function getRepo(owner,repo, ... )
 	local pluArgs = { ... }
 	return request({'repos',owner,repo,unpack(pluArgs)})
