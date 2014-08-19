@@ -320,3 +320,23 @@ function progressBar(pX,pY,pLen,pCol,pTxt)
 
 	return rtn
 end
+
+function splitStr(str, maxWidth)
+	local words = {}
+	for word in str:gmatch("[^ \t]+") do
+		table.insert(words, word)
+	end
+	local lines = {}
+	local cLn = 1
+	for i, word in ipairs(words) do
+		if not lines[cLn] then
+			lines[cLn] = word
+		elseif (lines[cLn].." "..word):len() > maxWidth then
+			cLn = cLn + 1
+			lines[cLn] = word
+		else
+			lines[cLn] = lines[cLn].." "..word
+		end
+	end
+	return lines
+end
