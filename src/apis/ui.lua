@@ -1,3 +1,77 @@
+function colorPicker(title, moreText, customColors)
+	local screenTitle = title or "Color Picker"
+	local colorList = {}
+	local selected = 1
+	if customColors then
+		for i = 1, #customColors do
+			table.insert(colorList, customColors[i])
+		end
+	else
+		for i = 0, 15 do
+			local num = 2^i
+			if term.isColor() or num == 1 or num == 32768 then
+				table.insert(colorList, num)
+			end
+		end
+	end
+	local function redraw()
+		term.setTextColor(1)
+		term.setBackgroundColor(32768)
+		term.clear()
+		term.setCursorPos(1, 1)
+		local w, h = term.getSize()
+		local cx, cy = math.ceil(w/2), math.ceil(h/2)
+		term.setCursorPos(cx-math.floor(screenTitle:len()/2), 1)
+		print(screenTitle)
+		if moreText then
+			for i, v in pairs(moreText) do
+				print(v)
+			end
+		end
+		for i = 1, #colorList do
+			term.setTextColor(colorList[i])
+			if selected == i then
+				write("#")
+			else
+				write("_")
+			end
+		end
+		term.setCursorPos(1, h-1)
+		term.setTextColor(colors.white)
+		term.setBackgroundColor(colors.black)
+		write("Use arrow keys to move,")
+		term.setCursorPos(1, h)
+		write("press enter to pick color.")
+	end
+	local oldPullEvent = os.pullEvent
+	os.pullEvent = os.pullEventRaw
+	while true do
+		redraw()
+		local event = {os.pullEvent()}
+		if event[1] == "terminate" then
+			os.pullEvent = oldPullEvent
+			return
+		elseif event[1] == "key" then
+			if event[2] == keys.left then
+				if selected == 1 then
+					selected = #colorList
+				else
+					selected = selected - 1
+				end
+			elseif event[2] == keys.right then
+				if selected == #colorList then
+					selected = 1
+				else
+					selected = selected + 1
+				end
+			elseif event[2] == keys.enter then
+				os.pullEvent = oldPullEvent
+				return colorList[selected]
+			end
+		end
+	end
+end
+
 function cprint(text)
 	if type(text) ~= 'table' then
 		text = {text}
