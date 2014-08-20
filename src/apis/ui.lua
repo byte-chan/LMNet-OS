@@ -308,17 +308,23 @@ function yesno(text, title, start)
 end
 
 function button(pLabel,pX,pY,pCol)
+	local xLen,yLen = term.getSize()
 	local rtn = {}
 	local rtn_m = {}
 	rtn_m.__index = rtn_m
 	rtn.label = pLabel
-	rtn.xStart = pX
-	rtn.xEnd = pX+pLabel:len()+2
+	if pX == 'm' then
+		rtn.xStart = (xLen/2)-(pLabel:len()/2)
+	else
+		rtn.xStart = pX
+	end
+
+	rtn.xEnd = rtn.xStart+pLabel:len()+2
 	rtn.y = pY
 	rtn.color = pCol
 	rtn.textColor = colors.white
 	rtn.onClick = nil
-	rtn.autoExec = false
+	rtn.autoExec = true
 	rtn.type = "button"
 	
 	setmetatable(rtn,rtn_m)
@@ -339,18 +345,12 @@ function button(pLabel,pX,pY,pCol)
 	function rtn_m:isClicked(pX,pY)
 		if pY == self.y and pX >= self.xStart and pX <= self.xEnd then
 			if self.autoExec and self.onClick then
-				self.action()
+				self.onClick()
 			end
 			return true
 		else
 			return false
 		end 
-	end
-	
-	function rtn_m:exec()
-		if self.onClick then
-			self.onClick()
-		end
 	end
 	
 	return rtn
