@@ -319,6 +319,7 @@ function button(pLabel,pX,pY,pCol)
 	rtn.textColor = colors.white
 	rtn.onClick = nil
 	rtn.autoExec = false
+	rtn.type = "button"
 	
 	setmetatable(rtn,rtn_m)
 
@@ -355,16 +356,20 @@ function button(pLabel,pX,pY,pCol)
 	return rtn
 end
 
-function clickedButtons(pX,pY, ... )
+function clickedElements(pX,pY, ... )
 	local x = { ... }
 	for i,v in pairs(x) do
 		if v:isClicked(pX,pY) then
-			v:exec()
+			if v.type == 'button' then
+				v:exec()
+			end
 			return v.label
 		end
 	end
 	return false
 end
+
+clickedButtons = clickedElements
 
 function progressBar(pX,pY,pLen,pCol,pTxt)
 	local rtn = {}
@@ -378,6 +383,7 @@ function progressBar(pX,pY,pLen,pCol,pTxt)
 	rtn.textColor = colors.white
 	rtn.showText = pTxt
 	rtn.percent = 0
+	rtn.type = "progressBar"
 
 	setmetatable(rtn,rtn_m)
 
@@ -413,4 +419,91 @@ function splitStr(str, maxWidth)
 		end
 	end
 	return lines
+end
+
+function textField(pId,pX,pY,pLen,pBg,pTxt)
+	local rtn = {}
+	local rtn_m = {}
+	rtn_m.__index = rtn_m
+	rtn.x = pX
+	rtn.y = pY
+	
+	if pLen == 'f' then
+		local b
+		rtn.len,b = term.getSize()
+	else
+		rtn.len = pLen
+	end
+	
+	rtn.textColor = pTxt
+	rtn.backgroundColor = pBg
+	rtn.onClickRead = true
+	rtn.value = ''
+	rtn.id = pId
+	rtn.text = pId
+	rtn.type = "textField"
+	
+	setmetatable(rtn,rtn_m)
+	
+	function rtn_m:draw()
+		paintutils.drawLine(self.x,self.y,self.len,self.y,self.backgroundColor)
+		local sign,gray
+		if self.value ~= '' then
+			sign = self.value
+			gray = false
+		else
+			sign = self.text
+			gray = true
+		end
+		
+		term.setCursorPos(self.x,self.y)
+		term.clearLine()
+		if gray then
+			term.setTextColor(colors.gray)
+		else
+			term.setTextColor(self.textColor)
+		end
+		
+		local i = 1
+		while i <= sign:len() and i <= self.len do
+			write(sign:sub(i,i))
+			i = i+1
+		end
+	end
+	
+	function rtn_m:isClicked(pX,pY)
+		if pX >= self.x and pX <= self.len and pY == self.y then
+			if self.onClickRead then
+				term.setCursorPos(self.x,self.y)
+				term.setTextColor(self.textColor)
+				term.setBackgroundColor(self.backgroundColor)
+				term.clearLine()
+				self.value = read()
+			end
+			return true
+		else
+			return false
+		end
+	end
+	
+	function rtn_m:warn()
+	
+	end
+	
+	return rtn
+end
+
+function textToTable(allowNil, ... )
+	local inp = { ... }
+	local rtn = {}
+	for i,v in ipairs(inp) do
+		if v.type == "textField" then	
+			if not allowNil and v.value == '' then
+				v:warn()
+				return nil
+			end
+			rtn[v.id] = v.value
+		end
+	end
+	return rtn
 end
