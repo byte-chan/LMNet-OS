@@ -12,7 +12,7 @@ local function splitStr(str, maxWidth) -- WASP FTW
 		table.insert(rawwords, word)
 	end
 	local words = {}
-	for i, word in ipairs(rawords) do
+	for i, word in ipairs(rawwords) do
 		local matches = {}
 		for match in word:gmatch("[^\n]+") do
 			table.insert(matches, match)
