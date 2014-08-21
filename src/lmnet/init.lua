@@ -75,9 +75,11 @@ function bsodError(msg)
 	win.setCursorPos(1, 1)
 	local parentTerm = term.current()
 	term.redirect(win)
-	for i, v in ipairs(splitStr(msg), ({win.getSize()})[1]) do
+	for i, v in ipairs(splitStr(msg), winwidth do
 		print(v)
-		if ({win.getCursorPos()})[2] == ({win.getSize()})[2] then
+		local winwidth, winheight = win.getSize()
+		local wincursorx, wincursory = win.getCursorPos()
+		if wincursory == winheight then
 			os.pullEvent("key")
 		end
 	end
