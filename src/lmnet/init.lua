@@ -17,11 +17,8 @@ local function splitStr(str, maxWidth) -- WASP FTW
 		for match in word:gmatch("[^\n]+") do
 			table.insert(matches, match)
 		end
-		if matches[2] then
-			matches[2] = "\n"..matches[2]
-		end
 		for i, v in pairs(matches) do
-			table.insert(words, v)
+			table.insert(words, (i > 1 and "\n" or "")..v)
 		end
 	end -- testing shit
 	local lines = {}
