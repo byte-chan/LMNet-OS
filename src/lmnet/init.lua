@@ -6,6 +6,35 @@ if not fs or not term or not shell then
 	return
 end
 
+local function splitStr(str, maxWidth) -- WASP FTW
+	local words = {}
+	for word in str:gmatch("[^ \t]+") do
+		table.insert(words, word)
+	end
+	for i, word in ipairs(words) do
+		local matches = {}
+		for match in word:gmatch("[^\n]+") do
+			table.insert(matches, match)
+		end
+		if matches[2] then
+			matches[2] = "\n"..matches[2]
+		end
+	end -- testing shit
+	local lines = {}
+	local cLn = 1
+	for i, word in ipairs(words) do
+		if not lines[cLn] then
+			lines[cLn] = word
+		elseif (lines[cLn].." "..word):len() > maxWidth or word: then
+			cLn = cLn + 1
+			lines[cLn] = word
+		else
+			lines[cLn] = lines[cLn].." "..word
+		end
+	end
+	return lines
+end
+
 -- load system API
 function bsodError(msg)
 	local oldTerm = term.current()
@@ -46,7 +75,12 @@ function bsodError(msg)
 	win.setCursorPos(1, 1)
 	local parentTerm = term.current()
 	term.redirect(win)
-	textutils.pagedPrint(msg)
+	for i, v in ipairs(splitStr(msg), ({win.getSize()})[1]) do
+		print(v)
+		if ({win.getCursorPos()})[2] == ({win.getSize()})[2] then
+			os.pullEvent("key")
+		end
+	end
 	term.redirect(parentTerm)
 	cprint("Press any key to continue", termValues.h - 2)
 	os.pullEvent("key")
