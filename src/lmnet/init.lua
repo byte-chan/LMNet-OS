@@ -7,17 +7,21 @@ if not fs or not term or not shell then
 end
 
 local function splitStr(str, maxWidth) -- WASP FTW
-	local words = {}
+	local rawwords = {}
 	for word in str:gmatch("[^ \t]+") do
-		table.insert(words, word)
+		table.insert(rawwords, word)
 	end
-	for i, word in ipairs(words) do
+	local words = {}
+	for i, word in ipairs(rawords) do
 		local matches = {}
 		for match in word:gmatch("[^\n]+") do
 			table.insert(matches, match)
 		end
 		if matches[2] then
 			matches[2] = "\n"..matches[2]
+		end
+		for i, v in pairs(matches) do
+			table.insert(words, v)
 		end
 	end -- testing shit
 	local lines = {}
@@ -75,10 +79,10 @@ function bsodError(msg)
 	win.setCursorPos(1, 1)
 	local parentTerm = term.current()
 	term.redirect(win)
+	local winwidth, winheight = win.getSize()
 	for i, v in ipairs(splitStr(msg, winwidth)--[[HEADDESKHEADDESKHEADDESKHEADDESKHEADDESKHEADDESKHEADDESKHEADDESK]]) do
-		print(v)
-		local winwidth, winheight = win.getSize()
 		local wincursorx, wincursory = win.getCursorPos()
+		print(v)
 		if wincursory == winheight then
 			os.pullEvent("key")
 		end
