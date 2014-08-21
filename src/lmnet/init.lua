@@ -75,7 +75,7 @@ function bsodError(msg)
 	win.setCursorPos(1, 1)
 	local parentTerm = term.current()
 	term.redirect(win)
-	for i, v in ipairs(splitStr(msg, winwidth) do
+	for i, v in ipairs(splitStr(msg, winwidth)--[[HEADDESKHEADDESKHEADDESKHEADDESKHEADDESKHEADDESKHEADDESKHEADDESK]]) do
 		print(v)
 		local winwidth, winheight = win.getSize()
 		local wincursorx, wincursory = win.getCursorPos()
