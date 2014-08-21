@@ -31,7 +31,7 @@ local function splitStr(str, maxWidth) -- WASP FTW
 			lines[cLn] = word
 		elseif (lines[cLn].." "..word):len() > maxWidth or word:sub(1, 1) == "\n" then
 			cLn = cLn + 1
-			lines[cLn] = word
+			lines[cLn] = word:sub(1, 1) == "\n" and word:sub(2) or word
 		else
 			lines[cLn] = lines[cLn].." "..word
 		end
