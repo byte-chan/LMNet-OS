@@ -25,7 +25,7 @@ local function splitStr(str, maxWidth) -- WASP FTW
 	for i, word in ipairs(words) do
 		if not lines[cLn] then
 			lines[cLn] = word
-		elseif (lines[cLn].." "..word):len() > maxWidth or word: then
+		elseif (lines[cLn].." "..word):len() > maxWidth or word:sub(1, 1) == "\n" then
 			cLn = cLn + 1
 			lines[cLn] = word
 		else
