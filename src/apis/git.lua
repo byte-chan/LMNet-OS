@@ -48,6 +48,10 @@ function getRepoContent(user,repo,path)
 	return getRepo(user,repo,'contents',path)
 end
 
+function gists(pID)
+	return request({'gists',pID})
+end
+
 function get(user, repo, bran, path, save)
 	if not user or not repo or not bran or not path then
 		error("not enough arguments, expected 4 or 5", 2)
