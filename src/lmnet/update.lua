@@ -156,8 +156,9 @@ end
 local filesDownloaded = 0
 
 local w, h = term.getSize()
+local pb
 if ui and term.isColor() then
-	local pb = ui.progressBar(1,h-2,w,colors.green,true)
+	pb = ui.progressBar(1,h-2,w,colors.green,true)
 end
 
 for k, v in pairs(files) do
