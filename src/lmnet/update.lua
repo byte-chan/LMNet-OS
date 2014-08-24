@@ -170,7 +170,7 @@ for k, v in pairs(files) do
 	print("File: "..v)
 	term.setCursorPos(2, h - 1)
 	if pb then
-		pb.percent = math.floor(filesDownloaded / fileCount * 100))
+		pb.percent = math.floor(filesDownloaded / fileCount * 100)
 		pb:draw()
 	else
 		print(tostring(math.floor(filesDownloaded / fileCount * 100)).."% - "..tostring(filesDownloaded + 1).."/"..tostring(fileCount))
