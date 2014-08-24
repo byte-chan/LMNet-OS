@@ -141,6 +141,7 @@ local files = {
 	["src/usrbin/timemachine.lua"] = "usr/bin/timemachine",
 	["src/usrbin/loadbkup.lua"] = "usr/bin/loadbkup",
 	["src/usrbin/2d.lua"] = "usr/bin/2d",
+	["src/usrbin/gists.lua"] = "usr/bin/gists",
 	["src/apis/config.lua"] = ".lmnet/apis/config",
 	["src/apis/git.lua"] = ".lmnet/apis/git",
 	["src/apis/packet.lua"] = ".lmnet/apis/packet",
@@ -153,6 +154,12 @@ for _ in pairs(files) do
 	fileCount = fileCount + 1
 end
 local filesDownloaded = 0
+
+local w, h = term.getSize()
+if ui and term.isColor() then
+	local pb = ui.progressBar(1,h-2,w,colors.green,true)
+end
+
 for k, v in pairs(files) do
 	term.setTextColor(colors.black)
 	term.setBackgroundColor(colors.white)
@@ -161,9 +168,13 @@ for k, v in pairs(files) do
 	print("LMNet OS Updater")
 	term.setCursorPos(2, 4)
 	print("File: "..v)
-	local w, h = term.getSize()
 	term.setCursorPos(2, h - 1)
-	print(tostring(math.floor(filesDownloaded / fileCount * 100)).."% - "..tostring(filesDownloaded + 1).."/"..tostring(fileCount))
+	if pb then
+		pb.percent = math.floor(filesDownloaded / fileCount * 100))
+		pb:draw()
+	else
+		print(tostring(math.floor(filesDownloaded / fileCount * 100)).."% - "..tostring(filesDownloaded + 1).."/"..tostring(fileCount))
+	end
 	local ok = getFile(k, v)
 	if not ok then
 		if term.isColor() then
