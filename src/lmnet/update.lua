@@ -147,6 +147,7 @@ local files = {
 	["src/apis/packet.lua"] = ".lmnet/apis/packet",
 	["src/apis/ui.lua"] = ".lmnet/apis/ui",
 	["src/apis/json.lua"] = ".lmnet/apis/json",
+	["src/apis/comgr.lua"] = ".lmnet/apis/comgr",
 	["src/lang/en.lang"] = ".lmnet/lang/en.lang",
 }
 local fileCount = 0
