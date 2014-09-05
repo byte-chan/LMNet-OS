@@ -31,8 +31,6 @@ function run()
 		for k, co in pairs(processList) do
 			if coroutine.status(co) ~= "dead" then
 				coroutine.resume(co, unpack(event))
-			else
-				processList[k] = nil
 			end
 		end
 		for k, code in pairs(removeCodes) do
