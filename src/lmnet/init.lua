@@ -411,7 +411,7 @@ local function _main()
 		handleCrash(_err)
 	end
 	if filefunc then
-		bgmgr.exit()
+		bgmgr.forceExit()
 	end
 end
 if filefunc then
@@ -459,6 +459,9 @@ else
 	local _ok, _err = pcall(_main)
 	if not _ok then
 		handleCrash(_err)
+	end
+	if bgmgr then
+		bgmgr.forceExit()
 	end
 end
 shell.run("/rom/programs/shutdown")
