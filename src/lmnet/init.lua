@@ -94,7 +94,7 @@ function bsodError(msg)
 	term.redirect(oldTerm)
 end
 local bgmgr = {}
-setmetatable(bgmgr, getfenv())
+setmetatable(bgmgr, {__index = getfenv()})
 local filefunc, err = loadfile(".lmnet/apis/comgr")
 if not filefunc then
 	printError("No coroutine manager API found, try updating LMNet OS.")
