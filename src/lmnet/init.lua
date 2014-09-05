@@ -102,18 +102,21 @@ if not filefunc then
 		printError("Error:")
 		printError(err)
 		printError("Report this error if possible.")
-		printError("(new issue")
+		printError("(new issue)")
 	end
 	print("System boot mode: no background programs")
 	print("Press any key to boot.")
+	
 end
-setfenv(filefunc, bgmgr)()
-bgManager = {}
-function bgManager.addFunction(func)
-	return bgmgr.addProcess(func)
-end
-function bgManager.removeFunction(id)
-	bgmgr.removeProcess(id)
+if filefunc then
+	setfenv(filefunc, bgmgr)()
+	bgManager = {}
+	function bgManager.addFunction(func)
+		return bgmgr.addProcess(func)
+	end
+	function bgManager.removeFunction(id)
+		bgmgr.removeProcess(id)
+	end
 end
 function main()
 function clear()
