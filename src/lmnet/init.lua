@@ -106,7 +106,7 @@ if not filefunc then
 	end
 	print("System boot mode: no background programs")
 	print("Press any key to boot.")
-	
+	os.pullEvent("key")
 end
 if filefunc then
 	setfenv(filefunc, bgmgr)()
