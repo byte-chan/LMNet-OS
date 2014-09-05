@@ -22,7 +22,6 @@ function run()
 		if exit then
 			break
 		end
-		local event = {os.pullEventRaw()}
 		for k, co in pairs(processList) do
 			if coroutine.status(co) ~= "dead" then
 				coroutine.resume(co, unpack(event))
@@ -33,6 +32,7 @@ function run()
 		for k, code in pairs(removeCodes) do
 			processList[k] = nil
 		end
+		local event = {os.pullEventRaw()}
 	end
 end
 function addProcess(func)
