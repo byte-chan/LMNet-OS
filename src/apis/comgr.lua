@@ -9,6 +9,7 @@ function forceExit()
 	exit = true
 end
 function run()
+	local firstRun = true
 	exit = false
 	while (function()
 		local rtn = false
@@ -20,6 +21,9 @@ function run()
 		return rtn
 	end)() or noAutoExit do
 		local event = {}
+		if not firstRun then
+			event = {os.pullEventRaw()}
+		end
 		if exit then
 			break
 		end
@@ -33,7 +37,6 @@ function run()
 		for k, code in pairs(removeCodes) do
 			processList[k] = nil
 		end
-		local event = {os.pullEventRaw()}
 	end
 end
 function addProcess(func)
