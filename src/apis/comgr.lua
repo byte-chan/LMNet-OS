@@ -19,6 +19,7 @@ function run()
 		end
 		return rtn
 	end)() or noAutoExit do
+		local event = {}
 		if exit then
 			break
 		end
