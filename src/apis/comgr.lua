@@ -12,7 +12,7 @@ function run()
 	exit = false
 	while (function()
 		local rtn = false
-		for i, co in ipairs(processList) do
+		for i, co in pairs(processList) do
 			if coroutine.status(co) ~= "dead" then
 				rtn = true
 			end
