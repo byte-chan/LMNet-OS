@@ -37,7 +37,7 @@ function run()
 end
 function addProcess(func)
 	local co = coroutine.create(func)
-	processList[code] = co
+	processList[tostring(func)] = co
 	return tostring(co)
 end
 function removeProcess(code)

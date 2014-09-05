@@ -108,7 +108,6 @@ if not filefunc then
 	print("Press any key to boot.")
 end
 setfenv(filefunc, bgmgr)()
-setmetatable(bgmgr, nil)
 bgManager = {}
 function bgManager.addFunction(func)
 	return bgmgr.addProcess(func)
