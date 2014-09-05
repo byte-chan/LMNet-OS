@@ -424,14 +424,14 @@ if filefunc then
 			"CRITICAL",
 			"SEVERE",
 			"FATAL",
-			[1338] = "OH SHIT OH SHIT OH SHIT OHSHITOHSHIT!!!!!!!!!!!!!!!!!!!!!!!!11!!!!!!!!!!1111!11!1!!11!!1!11111!!1",
-			[9002] = "IT'S OVER 9000!!!",
-			[4294967297] = "42949697296",
-			[(10^(-20))+1] = "OH SHIT THAT'S AN ERROR!!!",
-			[2110] = "timia2109 :)",
+			[1337] = "OH SHIT OH SHIT OH SHIT OHSHITOHSHIT!!!!!!!!!!!!!!!!!!!!!!!!11!!!!!!!!!!1111!11!1!!11!!1!11111!!1",
+			[9001] = "IT'S OVER 9000!!!",
+			[4294967296] = "42949697296",
+			[(10^(-20))] = "OH SHIT THAT'S AN ERROR!!!",
+			[2109] = "timia2109 :)",
 			[0] = "NIL :D",
-			[-9000] = "IT'S UNDER -9000!!!",
-			[1234567891] = "WHO THE FUCK ADDED THIS ERROR LEVEL",
+			[-9001] = "IT'S UNDER -9000!!!",
+			[1234567890] = "WHO THE FUCK ADDED THIS ERROR LEVEL",
 		}
 		while true do
 			local e, msg, errorLevel = os.pullEventRaw("syslog")
@@ -442,7 +442,7 @@ if filefunc then
 				local time = tostring(textutils.formatTime(os.time(), true))
 				local timeFormat = string.rep(" ", 5-time:len())..time
 				local errLevel = type(errorLevel) == "number" and errorLevel or 0
-				local str = "["..dayFormat.." "..timeFormat.."] ["..errorLevels[errLevel].."] "
+				local str = "["..dayFormat.." "..timeFormat.."] ["..(errorLevels[errLevel] or "unknown").."] "
 				logfile.writeLine(str..msg)
 				logfile.close()
 				write(str)
