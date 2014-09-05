@@ -158,7 +158,7 @@ local filesDownloaded = 0
 
 local w, h = term.getSize()
 local pb
-if ui and term.isColor() then
+if ui and term.isColor() and ui.progressBar then
 	pb = ui.progressBar(1,h-2,w,colors.green,true)
 end
 
