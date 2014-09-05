@@ -93,7 +93,30 @@ function bsodError(msg)
 	term.setCursorPos(1, 1)
 	term.redirect(oldTerm)
 end
-local _ok, _err = pcall(function()
+local bgmgr = {}
+setmetatable(bgmgr, getfenv())
+local filefunc, err = loadfile(".lmnet/apis/comgr")
+if not filefunc then
+	printError("No coroutine manager API found, try updating LMNet OS.")
+	if err then
+		printError("Error:")
+		printError(err)
+		printError("Report this error if possible.")
+		printError("(new issue")
+	end
+	print("System boot mode: no background programs")
+	print("Press any key to boot.")
+end
+setfenv(filefunc, bgmgr)()
+setmetatable(bgmgr, nil)
+bgManager = {}
+function bgManager.addFunction(func)
+	return bgmgr.addProcess(func)
+end
+function bgManager.removeFunction(id)
+	bgmgr.removeProcess(id)
+end
+function main()
 function clear()
 	term.clear()
 	term.setCursorPos(1, 1)
@@ -372,12 +395,68 @@ fgSet(colors.white)
 shell.setAlias('fs','/usr/bin/fileman')
 shell.setAlias('ls+','/usr/bin/fileman')
 shell.run("/usr/bin/bash", "--init")
-end)
-if not _ok then
-	if _err then
-		bsodError("System crash:\n\n".._err)
+end
+local function handleCrash(err)
+	if err then
+		bsodError("System crash:\n\n"..err)
 	else
 		bsodError("System crash:\n\n<unknown source>")
+	end
+end
+local function _main()
+	local _ok, _err = pcall(main)
+	if not _ok then
+		handleCrash(_err)
+	end
+	if filefunc then
+		bgmgr.exit()
+	end
+end
+if filefunc then
+	bgmgr.addProcess(_main)
+	bgmgr.addProcess(function()
+		local errorLevels = {
+			"INFO",
+			"WARNING",
+			"ERROR",
+			"CRITICAL",
+			"SEVERE",
+			"FATAL",
+			[1338] = "OH SHIT OH SHIT OH SHIT OHSHITOHSHIT!!!!!!!!!!!!!!!!!!!!!!!!11!!!!!!!!!!1111!11!1!!11!!1!11111!!1",
+			[9002] = "IT'S OVER 9000!!!",
+			[4294967297] = "42949697296",
+			[(10^(-20))+1] = "OH SHIT THAT'S AN ERROR!!!",
+			[2110] = "timia2109 :)",
+			[0] = "NIL :D",
+			[-9000] = "IT'S UNDER -9000!!!",
+			[1234567891] = "WHO THE FUCK ADDED THIS ERROR LEVEL",
+		}
+		while true do
+			local e, msg, errorLevel = os.pullEventRaw("syslog")
+			if e == "syslog" and msg then
+				local logfile = fs.open(".lmnet/sys.log", "a")
+				local day = tostring(os.day())
+				local dayFormat = string.rep(" ", 5-day:len())..day
+				local time = tostring(textutils.formatTime(os.time(), true))
+				local timeFormat = string.rep(" ", 5-time:len())..time
+				local errLevel = type(errorLevel) == "number" and errorLevel or 0
+				local str = "["..dayFormat.." "..timeFormat.."] ["..errorLevels[errLevel].."] "
+				logfile.writeLine(str..msg)
+				logfile.close()
+				write(str)
+				if errLevel > 2 and errLevel < 7 then
+					printError(msg)
+				else
+					print(msg)
+				end
+			end
+		end
+	end)
+	bgmgr.run()
+else
+	local _ok, _err = pcall(_main)
+	if not _ok then
+		handleCrash(_err)
 	end
 end
 shell.run("/rom/programs/shutdown")
