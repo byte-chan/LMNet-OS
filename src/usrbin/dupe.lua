@@ -1,0 +1,8 @@
+turtle.select(1)
+turtle.suck(21)
+turtle.suck(21)
+turtle.suck(21)
+turtle.drop()
+turtle.select(2)
+turtle.drop()
+turtle.select(1)
