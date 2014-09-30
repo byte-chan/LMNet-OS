@@ -139,7 +139,6 @@ local files = {
 	["src/usrbin/add.lua"] = "usr/bin/add",
 	["src/usrbin/format.lua"] = "usr/bin/format",
 	["src/usrbin/timemachine.lua"] = "usr/bin/timemachine",
-	["src/usrbin/loadbkup.lua"] = "usr/bin/loadbkup",
 	["src/usrbin/2d.lua"] = "usr/bin/2d",
 	["src/usrbin/gists.lua"] = "usr/bin/gists",
 	["src/apis/config.lua"] = ".lmnet/apis/config",
