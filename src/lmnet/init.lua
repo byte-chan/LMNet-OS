@@ -267,6 +267,11 @@ if http then
 	loadAPIs(fs.combine(systemDirs.apis, "http"))
 end
 
+if fs.exists("/.lmnet/connor.sys") then
+	print("Loading connor.sys...")
+	shell.run("/.lmnet/connor.sys")
+end
+
 -- add applications directory to path
 updatePath(systemDirs.apps, true)
 
