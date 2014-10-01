@@ -21,7 +21,7 @@ os.bro = function()
   if turtle then 
     if os.getComputerLabel() == "Broturtle" then
       term.setTextColour(colours.green)
-      print("BROFIST! PWN3D!")
+      print("BROFIST, PWN3D!")
       term.setTextColour(colours.white)
     else
       error("YOU'RE NOT BROTURTLE D:", 0)
