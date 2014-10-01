@@ -16,3 +16,17 @@ os.squid = function()
     term.setTextColour(colours.white)
   end
 end
+
+os.bro = function()
+  if turtle then 
+    if os.getComputerLabel() == "Broturtle" then
+      term.setTextColour(colours.green)
+      print("BROFIST! PWN3D!")
+      term.setTextColour(colours.white)
+    else
+      error("YOU'RE NOT BROTURTLE D:", 0)
+    end
+  else
+    error("Seriously? Broturtle is a Turtle.", 0)
+  end
+end
