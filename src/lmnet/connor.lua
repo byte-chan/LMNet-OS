@@ -12,7 +12,7 @@ os.squid = function()
     term.setTextColour(colours.white)
   else
     term.setTextColour(colours.grey)
-    print("The Squid goes... You got Inked!")
+    print("The Squid Inked on You!")
     term.setTextColour(colours.white)
   end
 end
