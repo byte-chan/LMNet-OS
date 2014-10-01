@@ -5,8 +5,8 @@ os.derp = function()
 end
 
 os.squid = function()
-  local chance = math.random(1, 3)
-  if chance == 3 then
+  local chance = math.random(1, 2)
+  if chance == 1 then
     term.setTextColour(colours.blue)
     print("The Squid goes Splash")
     term.setTextColour(colours.white)
