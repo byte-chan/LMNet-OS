@@ -434,6 +434,7 @@ if filefunc then
 			[4294967296] = "42949697296",
 			[(10^(-20))] = "OH SHIT THAT'S AN ERROR!!!",
 			[2109] = "timia2109 :)",
+			[518] = "delaney518 :D .__>",
 			[0] = "NIL :D",
 			[-9001] = "IT'S UNDER -9000!!!",
 			[1234567890] = "WHO THE FUCK ADDED THIS ERROR LEVEL",
