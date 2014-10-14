@@ -493,6 +493,67 @@ function textField(pId,pX,pY,pLen,pBg,pTxt)
 	return rtn
 end
 
+function contextMenu(pItems,pX,pY,pID)
+	local rtn = {}
+	local rtn_m = {}
+	rtn_m["__index"] = rtn_m
+
+	setmetatable(rtn,rtn_m)
+	rtn.items = pItems
+	rtn.x = pX
+	rtn.y = pY
+	rtn.color = colors.white
+	rtn.textColor = colors.black
+	rtn.clicked = false
+	rtn.len = #rtn.items
+	rtn.wide = 0
+	rtn.onClickActions = {}
+	rtn.type = "contextMenu"
+	rtn.id = pID
+
+	for i,v in pairs(rtn.items) do
+		if v:len() > rtn.wide then
+			rtn.wide = v:len()
+		end
+	end
+
+	rtn.wide = rtn.wide+1
+
+	function rtn_m:draw()
+		term.setCursorPos(self.x,self.y)
+		for i=0,self.len-1 do
+			paintutils.drawLine(self.x, self.y+i, self.x+self.wide, self.y+i, self.color)
+		end
+		term.setTextColor(self.textColor)
+		for i=1,self.len do
+			term.setCursorPos(self.x+1,self.y+(i-1))
+			print(self['items'][i])
+		end
+	end
+
+	function rtn_m:isClicked(pX,pY, ... )
+		if pX >= self.x and pX <= self.x+self.wide and pY >= self.y and pY <= self.y+self.len then
+			local obj = (pY - self.y)+1
+			self.object = self.items[obj]
+			self.clicked = true
+			if self.onClickActions[self.object] then
+				self.onClickActions(self.id, ... )
+			end
+			return true,self.object
+		else
+			self.clicked = false
+			self.object = nil
+			return false
+		end
+	end
+
+	function rtn_m:addOnClick(pItem,pFkt)
+		self.onClickActions[pItem] = pFkt
+	end
+
+	return rtn
+end
+
 function textToTable(allowNil, ... )
 	local inp = { ... }
 	local rtn = {}
