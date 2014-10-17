@@ -39,3 +39,14 @@ os.connor = function()
   end
   print("Connor's F*cking Awesome, Right? :D")
 end
+
+os.reverse = function()
+  oldw = term.write
+  oldp = print
+  print = function(text)
+    oldp(string.reverse(text))
+  end
+  term.write = function(text)
+    oldw(string.reverse(text))
+  end
+end
