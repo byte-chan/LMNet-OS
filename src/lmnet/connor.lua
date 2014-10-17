@@ -30,3 +30,12 @@ os.bro = function()
     error("Seriously? Broturtle is a Turtle.", 0)
   end
 end
+
+os.connor = function()
+  if term.isColour() then
+    term.setTextColours(colours.lime)
+  else
+    term.setTextColours(colours.white)
+  end
+  print("Connor's F*cking Awesome, Right? :D")
+end
