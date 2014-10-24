@@ -568,3 +568,61 @@ function textToTable(allowNil, ... )
 	end
 	return rtn
 end
+
+function createSwitch(tElements,yPos,colorSelect,colorNormal,pID)
+		--"Label"
+	rtn = {}
+	rtn_m = {}
+	rtn_m["__index"] = rtn_m
+	setmetatable(rtn,rtn_m)
+
+	rtn.type = "switch"
+	rtn.id = pID
+	rtn.buttons = {}
+	rtn.color = colorNormal
+	rtn.colorSelect = colorSelect
+	rtn.onClick = nil
+	rtn.y = yPos
+
+	for i=1,#tElements do
+		local j = 1
+		if rtn.buttons[i-1] then
+			j = rtn.buttons[i-1].xEnd
+		end
+		table.insert(rtn.buttons,ui.button(tElements[i],j,yPos,rtn.color))
+	end
+
+	rtn.select = rtn.buttons[1]
+
+	function rtn_m:draw()
+		for i,v in pairs(self.buttons) do
+			if self.select == v then
+				v.color = self.colorSelect
+			else
+				v.color = self.color
+			end
+			v:draw()
+		end
+	end
+
+	function rtn_m:value()
+		return self.select.label
+	end
+
+	function rtn_m:isClicked(pX,pY)
+		if self.y == pY then
+			for i,v in pairs(self.buttons) do
+				if v:isClicked(pX,pY) then
+					self.select = v
+					if self.onClick then
+						self.onClick(self.select.value,self.select)
+					end
+					return true,self.select
+				end
+			end
+		end
+		return false,self.select
+	end
+
+	return rtn
+end
