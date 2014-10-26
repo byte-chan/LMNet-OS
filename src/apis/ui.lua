@@ -1,3 +1,12 @@
+function version() 
+	return 1,"LMNetUI"
+end
+
+function has(pWhat)
+	-- I want a boolean, not a function...
+	return ui[pWhat] ~= nil 
+end
+
 function colorPicker(title, moreText, customColors)
 	local screenTitle = title or "Color Picker"
 	local colorList = {}
