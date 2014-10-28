@@ -17,6 +17,7 @@
 | ui.contextMenu(tableItems, xPos, yPos, id) | contextMenu Object | Like a menu on right click |
 | ui.textToTable(allowNil, ... ) | table TextField Values | Creates of all textFields on ... a table with the values |
 | ui.createSwitch(tableElements, yPos, colorSelect, colorNormal, id) | Switch object | A group of buttons |
+| ui.toogle(pID, pX, pY) | toogle Object | A true/false switch |
 
 ---
 # Objects
@@ -39,7 +40,7 @@
 | :draw() | nil | Draws the button |
 | :setNewLabel(pLabel) | nil | Set a new button label (Set length to a new value) |
 | :isClicked(pX,pY) | boolean | Checks if the button is clicked (then run onClick and return true) |
-
+---
 ## switch
 ####  attributes
 | Key | type | value |
@@ -58,6 +59,7 @@
 | :draw() | nil | draws the buttons |
 | :value() | String | return the Label of the button |
 | :isClicked(xPos, yPos) | boolean, button | checks if a button is Clicked |
+---
 ## contextMenu
 #### attributes
 | key | type | value |
@@ -78,6 +80,7 @@
 |:-----------------------------------------------------------------------------------------------:|-----------------|---------------------------------------------|
 | :draw() | nil | draw the menu |
 | :isClicked(X, Y, ...) | boolean, object | return true if pX and pY in the Menu and the obj ( ... are in your function) |
+---
 ## textField
 #### Attrbutes
 | key | type | value |
@@ -97,6 +100,7 @@
 | :draw() | nil | same as in other Objects |
 | :isClicked(X, Y) | boolean | Same as others, activate read() |
 | :warn() | nil | PLANNED |
+---
 ## progressBar
 #### Attributes
 | key | type | value |
@@ -113,3 +117,18 @@
 | key | return | desc |
 |:---:|---|---|
 | :draw() | nil | Draws the progressBar |
+---
+## toogle
+#### Attributes
+| key | type | value |
+|:---:|---|---|
+| x | number | X Pos of toogle |
+| y | number | Y Pos of toogle |
+| id | String / Number | ID of the toogle |
+| value | boolean | Value of the toogle |
+| type | String | "toogle" |
+#### Methods
+| key | return | desc |
+|:---:|---|---|
+| :draw() | nil | draws the toogle |
+| :isClicked(pX, pY) | boolean | checks if the toogle is clicked |

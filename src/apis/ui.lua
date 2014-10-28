@@ -635,3 +635,137 @@ function createSwitch(tElements,yPos,colorSelect,colorNormal,pID)
 
 	return rtn
 end
+
+function toogle(pID,pX,pY)
+	local rtn = {}
+	local rtn_m = {}
+	rtn_m.__index = rtn_m
+	setmetatable(rtn,rtn_m)
+	
+	rtn.x = pX
+	rtn.y = pY
+	rtn.id = pID
+	rtn.type = "toogle"
+	rtn.value = false
+		
+	function rtn_m:draw()
+		local dp = paintutils.drawPixel
+		if self.value then
+			dp(self.x,self.y,colors.green)
+			dp(self.x+1,self.y,colors.green)
+			term.setCursorPos(self.x+1,self.y)
+			write("1")
+			dp(self.x+2,self.y,colors.gray)
+		else
+			dp(self.x,self.y,colors.gray)
+			dp(self.x+1,self.y,colors.red)
+			dp(self.x+2,self.y,colors.red)
+			term.setCursorPos(self.x+1,self.y)
+			write("0")
+		end
+	end
+
+	function rtn_m:isClicked(pX,pY)
+		if pX >= self.x and pX <= self.x+2 and pY == self.y then
+			self.value = not self.value
+			self:draw()
+			return true
+		else
+			return false
+		end
+	end
+			
+	function rtn_m:makeTo(pTrue, pFalse)
+		if self.value then
+			return pTrue
+		else
+			return pFalse
+		end
+	end
+	
+	return rtn
+end
+
+function inputNumber(pID,pX,pY,pLen,pColor)
+	local rtn,rtn_m = {},{}
+	rtn_m.__index = rtn_m
+	setmetatable(rtn,rtn_m)
+
+	rtn.x = pX
+	rtn.y = pY
+	rtn.id = pID
+	rtn.len = pLen
+	rtn.value = ""
+	rtn.reverse = {}
+	for i=1,rtn.len do
+		rtn.value = rtn.value .. "0"
+		rtn.reverse[i] = rtn.len-(i-1)
+	end
+	rtn.type = "inputNumber"
+	rtn.color = pColor
+	rtn.textColor = colors.white
+
+	function rtn_m:draw()
+		term.setTextColor(self.textColor)
+		term.setBackgroundColor(self.color)
+		for i=1,self.len do
+			term.setCursorPos(self.x+(i-1),self.y)
+			write("+")
+			term.setCursorPos(self.x+(i-1),self.y+1)
+			write(self.value:sub(i,i))
+			term.setCursorPos(self.x+(i-1),self.y+2)
+			write("-")
+		end
+	end
+
+	function rtn_m:isClicked(pX,pY)
+		if pX >= self.x and pX <= self.x+self.len and pY >= self.y and pY <= self.y+3 then
+			local field = (pX-self.x)+1
+			local front,back,handle,add
+			
+			if field > 1 then
+				front = self.value:sub(1,field-1)
+			else
+				front = ""
+			end
+
+			if field < self.len then
+				back = self.value:sub(field+1,self.value:len())
+			else
+				back = ""
+			end
+			
+			handle = self.value:sub(field,field)
+
+			if pY == self.y or pY == self.y+2 then
+				local zehner = (self.reverse[field]-1)*10
+
+				if zehner == 0 then
+					zehner = 1
+				end
+
+				if pY == self.y then
+					add = zehner
+				else
+					add = -zehner
+				end
+
+				handle = tostring( tonumber(self.value) + add )
+				--self.value = front..handle..back
+			else
+				term.setCursorPos(self.x,self.y+1)
+				self.value = read()
+			end
+			self:draw()
+			return true
+		else
+			return false
+		end
+	end
+
+	function rtn_m:asNumber()
+		return tonumber(self.value)
+	end
+
+	return rtn
+end
