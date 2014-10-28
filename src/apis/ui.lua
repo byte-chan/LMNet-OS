@@ -695,17 +695,19 @@ function inputNumber(pID,pX,pY,pLen,pColor)
 	rtn.y = pY
 	rtn.id = pID
 	rtn.len = pLen
-	rtn.value = ""
-	rtn.reverse = {}
+	rtn.value,rtn.null = "",""
 	for i=1,rtn.len do
 		rtn.value = rtn.value .. "0"
-		rtn.reverse[i] = rtn.len-(i-1)
 	end
+	rtn.null = rtn.value
 	rtn.type = "inputNumber"
 	rtn.color = pColor
 	rtn.textColor = colors.white
 
 	function rtn_m:draw()
+		while self.value:len() < self.len do
+				self.value = "0"..self.value
+		end
 		term.setTextColor(self.textColor)
 		term.setBackgroundColor(self.color)
 		for i=1,self.len do
@@ -721,41 +723,25 @@ function inputNumber(pID,pX,pY,pLen,pColor)
 	function rtn_m:isClicked(pX,pY)
 		if pX >= self.x and pX <= self.x+self.len and pY >= self.y and pY <= self.y+3 then
 			local field = (pX-self.x)+1
-			local front,back,handle,add
-			
-			if field > 1 then
-				front = self.value:sub(1,field-1)
-			else
-				front = ""
-			end
-
-			if field < self.len then
-				back = self.value:sub(field+1,self.value:len())
-			else
-				back = ""
-			end
-			
-			handle = self.value:sub(field,field)
 
 			if pY == self.y or pY == self.y+2 then
-				local zehner = (self.reverse[field]-1)*10
-
-				if zehner == 0 then
-					zehner = 1
-				end
+				local zehner = 10^(self.len-field)
 
 				if pY == self.y then
-					add = zehner
+					self.value = tostring( tonumber(self.value) + zehner )
 				else
-					add = -zehner
+					self.value = tostring( tonumber(self.value) - zehner )
 				end
-
-				handle = tostring( tonumber(self.value) + add )
-				--self.value = front..handle..back
 			else
 				term.setCursorPos(self.x,self.y+1)
+				term.clearLine()
 				self.value = read()
 			end
+			
+			if self.value:len() > self.len or self:asNumber() < 0 then
+				self.value = self.null
+			end
+
 			self:draw()
 			return true
 		else

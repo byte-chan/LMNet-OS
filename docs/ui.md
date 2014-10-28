@@ -18,6 +18,7 @@
 | ui.textToTable(allowNil, ... ) | table TextField Values | Creates of all textFields on ... a table with the values |
 | ui.createSwitch(tableElements, yPos, colorSelect, colorNormal, id) | Switch object | A group of buttons |
 | ui.toogle(pID, pX, pY) | toogle Object | A true/false switch |
+| ui.inputNumber(pID, pX, pY, pLen, pColor) | inputNumber Object | Phonelinke Numberinput (if pLen = 5 then max value = 99999; if pLen = 1 then max value = 9) |
 
 ---
 # Objects
@@ -132,3 +133,23 @@
 |:---:|---|---|
 | :draw() | nil | draws the toogle |
 | :isClicked(pX, pY) | boolean | checks if the toogle is clicked |
+---
+## inputNumber
+#### Attributes
+| key | type | value |
+|:---:|---|---|
+| x | number | X Pos of the Input |
+| y | number | Y Pos of the Input |
+| id | String / number | ID of Object |
+| value | String | The Input |
+| len | number | The count of numbers (10^(len-1) is max value) |
+| null | String | On len = 4 it's "0000" on len = 1 it's "0" |
+| color | number (color) | Color of the Input |
+| textColor | number (color) | Text Color on the input |
+| type | String | "inputNumber" |
+#### Methods
+| key | return | value |
+|:---:|---|---|
+| :draw() | nil | Draws the Object |
+| :asNumber() | number | Return the input as number |
+| :isClicked(pX, pY) | boolean | check if the Object is clicked |
