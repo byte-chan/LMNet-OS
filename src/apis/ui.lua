@@ -1,3 +1,10 @@
+xLen,yLen = term.getSize()
+
+function isSpace()
+	local xNow, yNow = term.getCursorPos()
+	return yNow < yLen
+end
+
 function version() 
 	return 1,"LMNetUI"
 end
@@ -5,6 +12,13 @@ end
 function has(pWhat)
 	-- I want a boolean, not a function...
 	return ui[pWhat] ~= nil 
+end
+
+function clearArea(pYStart, pYEnd)
+	for i=pYStart,pYEnd do
+		term.setCursorPos(1,i)
+		term.clearLine()
+	end
 end
 
 function colorPicker(title, moreText, customColors)
@@ -695,19 +709,17 @@ function inputNumber(pID,pX,pY,pLen,pColor)
 	rtn.y = pY
 	rtn.id = pID
 	rtn.len = pLen
-	rtn.value,rtn.null = "",""
+	rtn.value = ""
+	rtn.reverse = {}
 	for i=1,rtn.len do
 		rtn.value = rtn.value .. "0"
+		rtn.reverse[i] = rtn.len-(i-1)
 	end
-	rtn.null = rtn.value
 	rtn.type = "inputNumber"
 	rtn.color = pColor
 	rtn.textColor = colors.white
 
 	function rtn_m:draw()
-		while self.value:len() < self.len do
-				self.value = "0"..self.value
-		end
 		term.setTextColor(self.textColor)
 		term.setBackgroundColor(self.color)
 		for i=1,self.len do
@@ -723,25 +735,41 @@ function inputNumber(pID,pX,pY,pLen,pColor)
 	function rtn_m:isClicked(pX,pY)
 		if pX >= self.x and pX <= self.x+self.len and pY >= self.y and pY <= self.y+3 then
 			local field = (pX-self.x)+1
-
-			if pY == self.y or pY == self.y+2 then
-				local zehner = 10^(self.len-field)
-
-				if pY == self.y then
-					self.value = tostring( tonumber(self.value) + zehner )
-				else
-					self.value = tostring( tonumber(self.value) - zehner )
-				end
+			local front,back,handle,add
+			
+			if field > 1 then
+				front = self.value:sub(1,field-1)
 			else
-				term.setCursorPos(self.x,self.y+1)
-				term.clearLine()
-				self.value = read()
+				front = ""
+			end
+
+			if field < self.len then
+				back = self.value:sub(field+1,self.value:len())
+			else
+				back = ""
 			end
 			
-			if self.value:len() > self.len or self:asNumber() < 0 then
-				self.value = self.null
-			end
+			handle = self.value:sub(field,field)
 
+			if pY == self.y or pY == self.y+2 then
+				local zehner = (self.reverse[field]-1)*10
+
+				if zehner == 0 then
+					zehner = 1
+				end
+
+				if pY == self.y then
+					add = zehner
+				else
+					add = -zehner
+				end
+
+				handle = tostring( tonumber(self.value) + add )
+				--self.value = front..handle..back
+			else
+				term.setCursorPos(self.x,self.y+1)
+				self.value = read()
+			end
 			self:draw()
 			return true
 		else
@@ -753,5 +781,106 @@ function inputNumber(pID,pX,pY,pLen,pColor)
 		return tonumber(self.value)
 	end
 
+	return rtn
+end
+
+function listView(pid, pX, pY, pLen, pWide, tListItems)
+	local rtn = {}
+	local rtn_m = {}
+	rtn_m.__index = rtn_m
+	setmetatable(rtn,rtn_m)
+	
+	rtn.x = pX
+	rtn.y = pY
+	rtn.len = pLen == "f" and yLen or pLen
+	rtn.wide = pWide == "f" and xLen or pWide
+	rtn.maxX = rtn.x + rtn.wide
+	rtn.maxY = rtn.y + rtn.len
+	
+	rtn.elements = #tListItems
+	rtn.list = tListItems
+	rtn.page = 1
+	rtn.type = "listView"
+	rtn.clickable = {}
+	rtn.id = pid
+	
+	function rtn_m:draw()
+		ui.clearArea(self.y, self.maxY)
+		self.clickable = {}
+		term.setCursorPos(self.x,self.y)
+		local temp1, temp2 = 0,0
+		local c = self.page
+		while ui.isSpace() and c <= self.elements do
+			temp1 = self:item(self.x, self.y+temp2, self.list[c], c)
+			for i=1,temp1 do
+				self.clickable[temp2+i] = c
+			end
+			temp2 = temp2+temp1
+			c = c+1
+		end
+	end
+
+	function rtn_m:newList(pList)
+		self.list = pList
+		self.elements = #pList
+		self:draw()
+	end
+
+	function rtn_m:setItem(pFkt)
+		self:item = pFkt
+	end
+	
+	function rtn_m:item(pX, pY, pItem, pNumber)
+		local col
+		if (pNumber / 2) == math.floor(pNumber/2) then
+			col = colors.gray
+		else
+			col = colors.lightGray
+		end
+		term.setCursorPos(pX,pY)
+		local len = 1
+		if type(pItem) == "table" then
+			for i=1,#pItem do
+				paintutils.drawLine(pX,pY+(i-1),xLen,pY+(i-1),col)
+			end
+			term.setCursorPos(pX, pY)
+			for i=1,#pItem do
+				print(pItem[i])
+			end
+			len = #pItem
+		else
+			paintutils.drawLine(pX,pY,xLen,pY,col)
+			print(pItem)
+		end
+		
+		return len
+	end
+	
+	function rtn_m.isClicked(pX, pY)
+		if pX >= self.x and pX <= self.maxX and pY >= self.y and pY <= self.maxY then
+			local itemThere = self.clickable[ (pY - self.y) + 1 ] 
+			local itemList = self.list[ itemThere + (self.page - 1) ]
+			return true, itemThere + (self.page - 1), itemList
+		else
+			return false
+		end
+	end
+	
+	function rtn_m:handleScroll(pF, pX, pY)
+		if pX and pY then
+			local buffer = self.autoExec
+			self.autoExec = false
+			local ist = self:isClicked(pX, pY)
+			self.autoExec = buffer
+			if ist then
+				self.page = self.page+pF
+				self:draw()
+			end
+		else
+			self.page = self.page+pF
+			self:draw()
+		end
+	end
+	
 	return rtn
 end
