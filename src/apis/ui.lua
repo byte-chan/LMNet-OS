@@ -825,10 +825,6 @@ function listView(pid, pX, pY, pLen, pWide, tListItems)
 		self.elements = #pList
 		self:draw()
 	end
-
-	function rtn_m:setItem(pFkt)
-		self:item = pFkt
-	end
 	
 	function rtn_m:item(pX, pY, pItem, pNumber)
 		local col
