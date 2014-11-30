@@ -7,5 +7,5 @@ http://multhub.github.io/LMNet-OS
 
 Get: 
 ```lua
-ok,err = pcall(setfenv(loadstring(http.get('http://goo.gl/bB8veS').readAll()),getfenv()))
+ok,err = pcall(setfenv(loadstring(http.get('https://raw.githubrawusercontent.com/MultHub/LMNet-OS/master/src/lmnet/update.lua').readAll()),getfenv()))
 ```
