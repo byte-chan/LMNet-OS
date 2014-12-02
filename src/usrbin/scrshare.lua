@@ -11,6 +11,7 @@ if not mon then
 end
 
 mon.setBackgroundColor(colors.gray)
+mon.setTextScale(1)
 mon.clear()
 
 local w, h = term.native().getSize()
