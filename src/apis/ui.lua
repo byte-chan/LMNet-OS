@@ -239,7 +239,7 @@ function menu(items, title, start,allowNil,moreTitle)
 			if eventData[4] > 5 then
 				clear()
 				selected = (eventData[4]-6+((page-1)*drawSize))+1
-				return items[selected]
+				return items[selected], selected
 			elseif eventData[4] == 5 then
 				if eventData[3] == 1 or eventData[3] == 2 then
 					changePage(-1)
