@@ -92,7 +92,7 @@ function write(cfgfile, cfg, value)
 		end
 		writefile.close()
 		rtn = true
-	end
+	end)
 	return rtn
 end
 function list(cfgfile)
