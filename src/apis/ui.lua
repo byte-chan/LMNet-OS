@@ -229,7 +229,7 @@ function menu(items, title, start,allowNil,moreTitle)
 				end
 			elseif eventData[2] == keys.enter then
 				clear()
-				return items[selected]
+				return items[selected], selected
 			elseif eventData[2] == keys.left then
 				changePage(-1)
 			elseif eventData[2] == keys.right then
