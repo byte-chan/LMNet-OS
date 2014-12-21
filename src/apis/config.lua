@@ -36,6 +36,7 @@ function read(cfgfile, cfg)
 		for i, v in pairs(config) do
 			if i == cfg then
 				rtn = v
+				return
 			end
 		end
 	end)
