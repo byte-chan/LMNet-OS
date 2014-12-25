@@ -174,7 +174,7 @@ function main()
 end
 
 function rdntCmd()
-	while true do
+	while running do
 		e = {os.pullEvent()}
 		if e[1] == "key" then
 			if e[2] == keys.leftCtrl then
