@@ -4,6 +4,9 @@ for _, v in pairs(rs.getSides()) do
 	end
 end
 
+local siteLoaded = false
+local internalPage
+
 running = true
 rdnt = {}
 local rdntmgr = {}
@@ -155,9 +158,6 @@ internalPages = {
 		end
 	end
 }
-
-local siteLoaded = false
-local internalPage
 
 function main()
 	while running do
