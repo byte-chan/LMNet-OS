@@ -20,7 +20,6 @@ function run()
 		end
 		return rtn
 	end)() or noAutoExit do
-		firstRun = false
 		if exit then
 			break
 		end
@@ -28,6 +27,7 @@ function run()
 		if not firstRun then
 			event = {os.pullEventRaw()}
 		end
+		firstRun = false
 		for k, co in pairs(processList) do
 			if coroutine.status(co) ~= "dead" then
 				coroutine.resume(co, unpack(event))
