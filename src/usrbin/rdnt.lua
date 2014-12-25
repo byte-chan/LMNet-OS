@@ -149,6 +149,7 @@ internalPages = {
 	end,
 	["exit"] = function()
 		running = false
+		rdntmgr.forceExit()
 	end,
 	["intpages"] = function()
 		rdnt.clear()
@@ -190,7 +191,7 @@ function rdntCmd()
 				rdnt.goto(rdnt.tryURL)
 			end
 		end
-		sleep(0)
+		os.pullEvent()
 	end
 end
 
