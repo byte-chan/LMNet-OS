@@ -6,6 +6,13 @@ end
 
 running = true
 rdnt = {}
+local rdntmgr = {}
+
+local function reloadCoroutineManager()
+	local coroutineManager = loadfile(".lmnet/apis/comgr")
+	setmetatable(rdntmgr, {__index = getfenv()})
+	setfenv(coroutineManager, rdntmgr)()
+end
 
 reDirect = rdnt.goto
 redirect = rdnt.goto
@@ -90,7 +97,7 @@ function rdnt.requestImpl(url)
 	rednet.broadcast(url)
 	local e = {rednet.receive(3)}
 	if e[2] ~= nil then
-		local file = fs.open("/.sitetmp", "w")
+		local file = fs.open(".sitetmp", "w")
 		file.write(e[2])
 		file.close()
 		return true
@@ -149,6 +156,9 @@ internalPages = {
 	end
 }
 
+local siteLoaded = false
+local internalPage
+
 function main()
 	while running do
 		if siteLoaded then
@@ -162,6 +172,7 @@ function main()
 		sleep(0)
 	end
 end
+
 function rdntCmd()
 	while true do
 		e = {os.pullEvent("key")}
@@ -183,12 +194,13 @@ function rdntCmd()
 	end
 end
 
-local siteLoaded = false
-local internalPage
 rdnt.homeURL = "rdnt.home"
 rdnt.tryURL = ""
 rdnt.currentURL = ""
 rdnt.home()
-parallel.waitForAny(main, rdntCmd)
+reloadCoroutineManager()
+rdntmgr.addProcess(main)
+rdntmgr.addProcess(rdntCmd)
+rdntmgr.run()
 
 clear()
