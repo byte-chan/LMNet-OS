@@ -20,13 +20,13 @@ function run()
 		end
 		return rtn
 	end)() or noAutoExit do
-		local event = {}
-		if not firstRun then
-			event = {os.pullEventRaw()}
-		end
 		firstRun = false
 		if exit then
 			break
+		end
+		local event = {}
+		if not firstRun then
+			event = {os.pullEventRaw()}
 		end
 		for k, co in pairs(processList) do
 			if coroutine.status(co) ~= "dead" then
