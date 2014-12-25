@@ -169,7 +169,7 @@ function main()
 			internalPages[internalPage]()
 			internalPage = nil
 		end
-		sleep(0)
+		os.pullEvent()
 	end
 end
 
