@@ -163,7 +163,7 @@ function main()
 	while running do
 		if siteLoaded then
 			siteLoaded = false
-			shell.run("/.sitetmp")
+			dofile(".sitetmp")
 		end
 		if internalPage then
 			internalPages[internalPage]()
@@ -175,7 +175,7 @@ end
 
 function rdntCmd()
 	while true do
-		e = {os.pullEvent("key")}
+		e = {os.pullEvent()}
 		if e[1] == "key" then
 			if e[2] == keys.leftCtrl then
 				term.setCursorPos(1, 1)
