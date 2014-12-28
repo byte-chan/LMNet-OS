@@ -4,10 +4,14 @@ if not git then
 end
 
 local function toboolean(pI)
-	if pI and (pI == '1' or pI:lower() == 'true' or pI:lower() == 't') then
-		return true
-	else
-		return false
+	if pI ~= nil then
+		if pI == '1' or pI:lower() == 'true' or pI:lower() == 't' then
+			return true
+		else
+			return false
+		end
+	else 
+		return false 
 	end
 end
 
