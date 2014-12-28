@@ -4,7 +4,7 @@ if not git then
 end
 
 local function toboolean(pI)
-	if pI == '1' or pI:lower() == 'true' or pI:lower() == 't' then
+	if pI and (pI == '1' or pI:lower() == 'true' or pI:lower() == 't') then
 		return true
 	else
 		return false
