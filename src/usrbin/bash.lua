@@ -90,7 +90,7 @@ while not bExit do
 		"~"..shell.dir():sub(userPath:len()+1),
 		"/"..shell.dir()
 	)
-	term.clearLine()
+--	term.clearLine() -- problem?
 	local w, h = term.getSize()
 	if w < 30 and h < 25 then
 		write(
