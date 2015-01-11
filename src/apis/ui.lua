@@ -420,6 +420,18 @@ function progressBar(pX,pY,pLen,pCol,pTxt)
 		term.setBackgroundColor(colors.black)
 		write(tostring(self.percent)..' %')
 	end
+	
+	function rtn_m:progress( pProgress )
+		local progress
+		if pProgress <= 1 then
+			progress = pProgress*100	
+		else
+			progress = pProgress	
+		end
+		
+		self.percent = progress
+		self:draw()
+	end
 
 	return rtn
 end
