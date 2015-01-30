@@ -892,3 +892,99 @@ function listView(pid, pX, pY, pLen, pWide, tListItems)
 	
 	return rtn
 end
+
+function inGreen(pTxt)
+	term.setTextColor(8192)
+	print(pTxt)
+	term.setTextColor(colors.white)
+end
+
+function inBrown(pTxt)
+	term.setTextColor(4096)
+	print(pTxt)
+	term.setTextColor(colors.white)
+end
+
+function inBlack(pTxt)
+	term.setTextColor(32768)
+	print(pTxt)
+	term.setTextColor(colors.white)
+end
+
+function inPink(pTxt)
+	term.setTextColor(64)
+	print(pTxt)
+	term.setTextColor(colors.white)
+end
+
+function inYellow(pTxt)
+	term.setTextColor(16)
+	print(pTxt)
+	term.setTextColor(colors.white)
+end
+
+function inOrange(pTxt)
+	term.setTextColor(2)
+	print(pTxt)
+	term.setTextColor(colors.white)
+end
+
+function inMagenta(pTxt)
+	term.setTextColor(4)
+	print(pTxt)
+	term.setTextColor(colors.white)
+end
+
+function inPurple(pTxt)
+	term.setTextColor(1024)
+	print(pTxt)
+	term.setTextColor(colors.white)
+end
+
+function inCyan(pTxt)
+	term.setTextColor(512)
+	print(pTxt)
+	term.setTextColor(colors.white)
+end
+
+function inRed(pTxt)
+	term.setTextColor(16384)
+	print(pTxt)
+	term.setTextColor(colors.white)
+end
+
+function inWhite(pTxt)
+	term.setTextColor(1)
+	print(pTxt)
+	term.setTextColor(colors.white)
+end
+
+function inLightBlue(pTxt)
+	term.setTextColor(8)
+	print(pTxt)
+	term.setTextColor(colors.white)
+end
+
+function inLightGray(pTxt)
+	term.setTextColor(256)
+	print(pTxt)
+	term.setTextColor(colors.white)
+end
+
+function inGray(pTxt)
+	term.setTextColor(128)
+	print(pTxt)
+	term.setTextColor(colors.white)
+end
+
+function inLime(pTxt)
+	term.setTextColor(32)
+	print(pTxt)
+	term.setTextColor(colors.white)
+end
+
+function inBlue(pTxt)
+	term.setTextColor(2048)
+	print(pTxt)
+	term.setTextColor(colors.white)
+end
