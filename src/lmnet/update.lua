@@ -149,6 +149,7 @@ local files = {
 	["src/apis/comgr.lua"] = ".lmnet/apis/comgr",
 	["src/lang/en.lang"] = ".lmnet/lang/en.lang",
 	["src/lang/nl.lang"] = ".lmnet/lang/nl.lang",
+	["src/lang/de.lang"] = ".lmnet/lang/de.lang",
 	["src/lmnet/connor.lua"] = ".lmnet/connor.sys",
 }
 local fileCount = 0
