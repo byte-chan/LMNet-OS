@@ -83,8 +83,8 @@ local function toggleRedstone()
 		rs.setOutput("top", not rs.getOutput(direction))
 	elseif direction == "front" then
 		rs.setOutput(direction, not rs.getOutput(direction))
-	elseif direction == "front" then
-		rs.setOutput(direction, not rs.getOutput(direction))
+	elseif direction == "down" then
+		rs.setOutput("bottom", not rs.getOutput(direction))
 	end
 end
 
