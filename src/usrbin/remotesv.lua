@@ -80,11 +80,11 @@ local function slotDown()
 end
 local function toggleRedstone()
 	if direction == "up" then
-		rs.setOutput("top", not rs.getOutput(direction))
+		rs.setOutput("top", not rs.getOutput("top"))
 	elseif direction == "front" then
 		rs.setOutput(direction, not rs.getOutput(direction))
 	elseif direction == "down" then
-		rs.setOutput("bottom", not rs.getOutput(direction))
+		rs.setOutput("bottom", not rs.getOutput("bottom"))
 	end
 end
 
