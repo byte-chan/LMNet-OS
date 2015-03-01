@@ -1,6 +1,6 @@
 lmnet.ui.menu.info.1="Auswahl mit den Pfeiltasten oder der Maus."
 lmnet.ui.menu.info.2="Druecke enter um zu bestaetigen."
-lmnet.ui.menu.info.allowNil="Terminate zum abbrechen."
+lmnet.ui.menu.info.allowNil="STRG + T zum abbrechen."
 lmnet.ui.menu.page.1="Seite"
 lmnet.ui.menu.page.2="von"
 lmnet.login.notCraftOS="Programm laeuft nicht in CraftOS."
