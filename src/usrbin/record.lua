@@ -1,3 +1,4 @@
+local play = "term.clear()\nterm.setCursorPos(1,1)\npos = 1\nstart = os.clock()\nwhile true do\n	if str[pos][1] <= os.clock() - start then\n  term[str[pos][2]](unpack(str[pos][3]))\n  pos = pos + 1\n  if pos == #str then\n    break\n  end\n	else\n		sleep(0.01)\n	end\nend\nsleep(2)\nterm.clear()\nterm.setCursorPos(1,1)\nprint('Recording Ended!')"
 local tArgs = {...}
 if #tArgs < 1 then
 	print("Usage: record <file> [startup]")
@@ -93,6 +94,7 @@ term.native().setCursorPos(1, 1)
 print("Please wait... Saving")
 f = fs.open(tArgs[1],"wb")
 rec = textutils.serialize(rec)
+rec = "str = "..rec.."\n"..play
 for i=1,#rec do
 	f.write(string.byte(rec:sub(i,i)))
 	if i%1000 == 0 then
