@@ -82,10 +82,10 @@ term.native().clear()
 term.native().setCursorPos(1, 1)
 term.redirect(redirect)
 
-if tArgs[2] == nil or not fs.exists(tArgs[2]) then
+if tArgs[2] == nil or not fs.exists(shell.resolve(tArgs[2])) then
   tArgs[2] = "shell"
 end
-shell.run(tArgs[2])
+shell.run(shell.resolve(tArgs[2]))
 
 term.redirect(term.native())
 term.native().clear()
