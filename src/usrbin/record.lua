@@ -84,7 +84,9 @@ ntv.setCursorPos(1, 1)
 term.redirect(redirect)
 
 if tArgs[2] == nil or not fs.exists(shell.resolve(tArgs[2])) then
-  tArgs[2] = "shell"
+  if fs.exists("startup") then
+  	tArgs[2] = "startup"
+  end
 end
 shell.run(shell.resolve(tArgs[2]))
 
