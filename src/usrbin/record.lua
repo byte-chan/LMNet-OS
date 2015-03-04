@@ -78,8 +78,8 @@ redirect.isColour = redirect.isColor
 redirect.setTextColour = redirect.setTextColor
 redirect.setBackgroundColour = redirect.setBackgroundColor
 
-term.native().clear()
-term.native().setCursorPos(1, 1)
+ntv.clear()
+ntv.setCursorPos(1, 1)
 term.redirect(redirect)
 
 if tArgs[2] == nil or not fs.exists(shell.resolve(tArgs[2])) then
@@ -91,6 +91,12 @@ term.redirect(term.native())
 term.native().clear()
 term.native().setCursorPos(1, 1)
 print("Please wait... Saving")
-f = fs.open(tArgs[1],"w")
-f.writeLine(textutils.serialize(rec))
+f = fs.open(tArgs[1],"wb")
+rec = textutils.serialize(rec)
+for i=1,#rec do
+	f.write(string.byte(rec:sub(i,i)))
+	if i%1000 == 0 then
+		sleep(0)
+	end
+end
 f.close()
