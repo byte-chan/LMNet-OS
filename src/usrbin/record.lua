@@ -6,7 +6,7 @@ local helpMsg = {
 
 local tArgs = {...}
 if #tArgs < 1 then
-	print(table.concat(helpMsg))
+	print(table.concat(helpMsg, "\n"))
 	return
 end
 
