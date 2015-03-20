@@ -156,8 +156,13 @@ function loadAPIs(dir)
 	end
 	for _, v in pairs(fs.list(dir)) do
 		if not fs.isDir(fs.combine(dir, v)) then
-			os.loadAPI(fs.combine(dir, v))
-			table.insert(apiList, v)
+			if v:sub(1,1) == "_" then
+				fs.combine(dir, v)
+				table.insert(apiList,v)
+			else
+				os.loadAPI(fs.combine(dir, v))
+				table.insert(apiList, v)^
+			end
 		end
 	end
 end
