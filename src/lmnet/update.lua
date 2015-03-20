@@ -192,6 +192,7 @@ for k, v in pairs(files) do
 	end
 	filesDownloaded = filesDownloaded + 1
 end
+get("timia2109", "down", "master", "down.lua", ".lmnet/apis/_down")
 clear()
 term.setCursorPos(2, 2)
 print("Creating missing directories...")
