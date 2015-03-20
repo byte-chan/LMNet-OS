@@ -161,7 +161,7 @@ function loadAPIs(dir)
 				table.insert(apiList,v)
 			else
 				os.loadAPI(fs.combine(dir, v))
-				table.insert(apiList, v)^
+				table.insert(apiList, v)
 			end
 		end
 	end
