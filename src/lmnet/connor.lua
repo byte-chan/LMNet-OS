@@ -50,3 +50,7 @@ os.reverse = function()
     oldw(string.reverse(text))
   end
 end
+
+os.crash = function()
+  error("OVER 9000000000000!!!!!!!!!!!!!". 0)
+end
