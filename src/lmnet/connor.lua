@@ -52,5 +52,9 @@ os.reverse = function()
 end
 
 os.crash = function()
-  error("OVER 9000000000000!!!!!!!!!!!!!". 0)
+  error("OVER 9000000000000!!!!!!!!!!!!!", 0)
+end
+
+os.dns = function()
+  rednet.broadcast(1337, "dns")
 end
