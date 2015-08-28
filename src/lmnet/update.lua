@@ -142,6 +142,7 @@ local files = {
 	["src/usrbin/2d.lua"] = "usr/bin/2d",
 	["src/usrbin/gists.lua"] = "usr/bin/gists",
 	["src/usrbin/record.lua"] = "usr/bin/record",
+	["src/usrbin/edt.lua"] = "usr/bin/edt",
 	["src/apis/config.lua"] = ".lmnet/apis/config",
 	["src/apis/git.lua"] = ".lmnet/apis/git",
 	["src/apis/packet.lua"] = ".lmnet/apis/packet",
