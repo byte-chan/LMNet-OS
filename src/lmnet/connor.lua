@@ -33,9 +33,9 @@ end
 
 os.connor = function()
   if term.isColour() then
-    term.setTextColours(colours.lime)
+    term.setTextColour(colours.lime)
   else
-    term.setTextColours(colours.white)
+    term.setTextColour(colours.white)
   end
   print("Connor's F*cking Awesome, Right? :D")
 end
@@ -57,4 +57,22 @@ end
 
 os.dns = function()
   rednet.broadcast(1337, "dns")
+end
+
+os.glados = function()
+  term.setTextColour(colours.yellow)
+  local messages = {
+    "Ugh.",
+    "Ughh..",
+    "Ughhh...",
+    "Where are my..",
+    "Eh",
+    "WHERE ARE MY F**KING CORES?!11?1!!1"
+  }
+  
+  for k, v in pairs(messages)
+    print(v)
+    sleep(.7)
+  end
+  term.setTextColour(colours.white)
 end
