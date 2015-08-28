@@ -70,7 +70,7 @@ os.glados = function()
     "WHERE ARE MY F**KING CORES?!11?1!!1"
   }
   
-  for k, v in pairs(messages)
+  for k, v in pairs(messages) do
     print(v)
     sleep(.7)
   end
