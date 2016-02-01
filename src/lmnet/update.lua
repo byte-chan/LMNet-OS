@@ -153,6 +153,7 @@ local files = {
 	["src/lang/nl.lang"] = ".lmnet/lang/nl.lang",
 	["src/lang/de.lang"] = ".lmnet/lang/de.lang",
 	["src/lang/es.lang"] = ".lmnet/lang/es.lang",
+	["src/lang/it.lang"] = ".lmnet/lang/it.lang",
 	["src/lmnet/connor.lua"] = ".lmnet/connor.sys",
 }
 local fileCount = 0
